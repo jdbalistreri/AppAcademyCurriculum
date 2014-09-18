@@ -1,0 +1,25 @@
+# ---- PROBLEM 16 ---- #
+
+# 2**15 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
+#
+# What is the sum of the digits of the number 2**1000?
+
+# ---- --------- ---- #
+
+
+
+
+
+
+n = 1000
+
+num = 2 ** n
+
+str = num.to_s
+
+sum = 0
+
+str.each_char { |x| sum += x.to_i }
+
+puts sum
+
