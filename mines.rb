@@ -93,13 +93,7 @@ class Board
   end
 
   def add_bombs(num_bombs)
-    bombs_added = 0
-    until bombs_added >= num_bombs
-      rand_row = @board.sample
-      rand_tile = rand_row.sample
-      bombs_added += 1 unless rand_tile.bomb
-      rand_tile.make_bomb
-    end
+    @board.flatten.sample(num_bombs).each { |tile| tile.make_bomb }
   end
 
   def link_tiles
@@ -211,8 +205,9 @@ class Game
 
   def self.display_saves(saves)
     saves.each_with_index do |filename, index|
-      puts "#{index}. #{filename}"
+      puts "#{index}. #{(File.basename(filename, ".yaml")).capitalize}"
     end
+    2.times { puts "" }
   end
 
   def self.display_start_menu
