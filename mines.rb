@@ -5,14 +5,10 @@ class Board
   attr_reader :board, :num_bombs, :height, :width, :loss, :date
 
   def initialize(height = 9, width = 9, num_bombs = 10)
-    @height = height
-    @width = width
-    make_empty_board(height, width)
-    add_bombs(num_bombs)
-    link_tiles
-    @num_bombs = num_bombs
-    @loss = false
-    @date = Time.now
+    @height, @width, @num_bombs = height, width, num_bombs
+    @loss, @date = false, Time.now
+
+    create_board(height, width, num_bombs)
   end
 
   def game_over?
@@ -20,21 +16,11 @@ class Board
   end
 
   def win?
-    self.each_tile { |tile| return false if !tile.bomb && !tile.revealed }
-    true
-  end
-
-  def render
-    rendered_rows = []
-
-    @board.each_with_index do |row, index|
-      rendered_rows << [(index + 97).chr, "|", row.map{ |tile| tile.render(@loss)}].join(" ")
+    self.each_tile do |tile|
+      return false if !tile.bomb && !tile.revealed
     end
 
-    rendered_rows << [" " * 3].concat(Array.new(height, "-")).join(" ")
-    rendered_rows << [" " * 3].concat((0...width).to_a).join(" ")
-
-    rendered_rows
+    true
   end
 
   def display
@@ -77,33 +63,49 @@ class Board
     @board[y][x]
   end
 
-  def []=(pos, value) #may want to delete this later
-    y, x = pos
-    @board[y][x] = value
-  end
+  private
 
-  def make_empty_board(height, width)
-    @board = Array.new(height) { Array.new(width) }
+    def create_board(height, width, num_bombs)
+      make_empty_board(height, width)
+      add_bombs(num_bombs)
+      link_tiles
+    end
 
-    @board.each_with_index do |row, y|
-      row.each_with_index do |tile, x|
-        @board[y][x] = Tile.new([y, x], self)
+    def make_empty_board(height, width)
+      @board = Array.new(height) { Array.new(width) }
+
+      @board.each_with_index do |row, y|
+        row.each_with_index do |tile, x|
+          @board[y][x] = Tile.new([y, x], self)
+        end
       end
     end
-  end
 
-  def add_bombs(num_bombs)
-    @board.flatten.sample(num_bombs).each { |tile| tile.make_bomb }
-  end
+    def add_bombs(num_bombs)
+      @board.flatten.sample(num_bombs).each { |tile| tile.make_bomb }
+    end
 
-  def link_tiles
-    self.each_tile {|tile| tile.add_neighbors(@board)}
-    count_bombs
-  end
+    def link_tiles
+      self.each_tile {|tile| tile.add_neighbors(@board)}
 
-  def count_bombs
-    self.each_tile(&:count_neighbor_bombs)
-  end
+      self.each_tile(&:count_neighbor_bombs)
+    end
+
+    def render
+      rendered_rows = []
+
+      @board.each_with_index do |row, index|
+        rendered_rows << [(index + 97).chr, "|", row.map do |tile|
+          tile.render(@loss)
+        end
+        ].join(" ")
+      end
+
+      rendered_rows << [" " * 3].concat(Array.new(height, "-")).join(" ")
+      rendered_rows << [" " * 3].concat((0...width).to_a).join(" ")
+
+      rendered_rows
+    end
 end
 
 
