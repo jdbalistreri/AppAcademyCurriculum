@@ -4,5 +4,5 @@ require_relative "players.rb"
 require_relative "game.rb"
 
 
-class CheckersError << StandardError
+class CheckersError < StandardError
 end

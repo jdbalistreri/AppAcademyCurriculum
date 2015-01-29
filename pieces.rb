@@ -16,7 +16,7 @@ class Piece
   end
 
   def inspect
-    "#{@color}#{" King" if @king} at #{@position}"
+    "#{@color} #{@king ? "king" : "piece"} at #{@position}"
   end
 
   def move(destination)

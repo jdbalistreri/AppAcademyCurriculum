@@ -1,6 +1,7 @@
 require_relative "checkers.rb"
 
 class Board
+  attr_reader :rows
 
   def initialize #this could take an empty argument
     fill_board #make this an array of pieces, need a fill board method
@@ -11,11 +12,13 @@ class Board
   end
 
   def add_piece(piece)
-    #this takes a piece object and then will place it using the pieces coordinates
+    self[piece.position] = piece
   end
 
-  def remove_piece(position)
-    #this should remove a piece, for instance, after a jump
+  def remove_piece_at(position)
+    raise CheckersError.new "No piece at that position" if self[position].nil?
+
+    self[position] = nil
   end
 
   def empty?(destination)
