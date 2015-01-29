@@ -11,6 +11,11 @@ class Piece
 
     @board.place_piece(self)
   end
+  #
+  # def perform_moves!(move_sequence)
+  #
+  #   raise
+  # end
 
   def move_to(destination)
     perform_slide(destination) || perform_jump(destination)
@@ -19,6 +24,7 @@ class Piece
   def perform_slide(destination)
     if valid_slide?(destination)
       move_to!(destination)
+      true
     else
       false
     end
@@ -28,7 +34,6 @@ class Piece
     if valid_jump?(destination)
       @board.remove_piece_at(jumped_position(destination))
       move_to!(destination)
-
       true
     else
       false
@@ -56,7 +61,7 @@ class Piece
   def jumps_enemy?(destination)
     jumped_piece = @board[jumped_position(destination)]
 
-    raise "You must jump over something." if jumped_piece.nil?
+    return false if jumped_piece.nil?
     jumped_piece.color != color
   end
 
