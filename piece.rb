@@ -10,7 +10,6 @@ class Piece
 
   def initialize(color, board, position, king = false)
     @color, @board, @position, @king = color, board, position, king
-
     @board.place_piece(self)
   end
 
@@ -19,99 +18,9 @@ class Piece
     perform_moves!(move_sequence)
   end
 
-  def perform_moves!(move_sequence)
-    if move_sequence.count == 1
-      raise InvalidMoveError.new unless move_to(move_sequence.first)
-    else
-      move_sequence.each do |destination|
-        raise InvalidMoveError.new unless perform_jump(destination)
-      end
-    end
-  end
-
-  def valid_move_seq?(move_sequence)
-    clone_board = @board.dup
-    clone_piece = clone_board[@position]
-
-    begin
-      clone_piece.perform_moves!(move_sequence)
-    rescue InvalidMoveError
-      false
-    else
-      true
-    end
-  end
-
-  def move_to(destination)
-    perform_slide(destination) || perform_jump(destination)
-  end
-
-  def perform_slide(destination)
-    if valid_slide?(destination)
-      move_to!(destination)
-      maybe_promote
-      true
-    else
-      false
-    end
-  end
-
-  def perform_jump(destination)
-    if valid_jump?(destination)
-      @board.remove_piece_at(jumped_position(destination))
-      move_to!(destination)
-      maybe_promote
-      true
-    else
-      false
-    end
-  end
-
-  def move_to!(destination)
-    @board.remove_piece_at(@position)
-
-    @position = destination
-    @board.place_piece(self)
-  end
-
-  def valid_slide?(destination)
-    move_locations(:slide).include?(destination) &&
-      @board[destination].nil?
-  end
-
-  def valid_jump?(destination)
-    move_locations(:jump).include?(destination) &&
-      @board[destination].nil? &&
-      jumps_enemy?(destination)
-  end
-
-  def jumps_enemy?(destination)
-    jumped_piece = @board[jumped_position(destination)]
-
-    return false if jumped_piece.nil?
-    jumped_piece.color != color
-  end
-
-  def jumped_position(destination)
-    dest_y, dest_x = destination
-    curr_y, curr_x = @position
-    [(dest_y + curr_y)/2, (dest_x + curr_x)/2]
-  end
-
-  def promote
-    @king = true
-  end
-
-  def maybe_promote
-    promote if position[0] == (color == :red ? 7 : 0)
-  end
-
   def render
-    if @king
-      @color == :red ? " ♚ ".colorize(:red) : " ♚ ".colorize(:black)
-    else
-      @color == :red ? " ♟ ".colorize(:red) : " ♟ ".colorize(:black)
-    end
+    value = @king ? " ♚ " : " ♟ "
+    @color == :red ? value.colorize(:red) : value.colorize(:black)
   end
 
   def valid_moves
@@ -119,7 +28,85 @@ class Piece
       move_locations(:jump).select { |move| valid_jump?(move) }
   end
 
-  # private
+  protected
+    def perform_moves!(move_sequence)
+      if move_sequence.count == 1
+        unless perform_slide(move_sequence.first) || perform_jump(move_sequence.first)
+          raise InvalidMoveError.new
+        end
+      else
+        move_sequence.each do |destination|
+          raise InvalidMoveError.new unless perform_jump(destination)
+        end
+      end
+    end
+
+  private
+    def move_to!(destination)
+      @board.remove_piece_at(@position)
+
+      @position = destination
+      @board.place_piece(self)
+    end
+
+    def valid_move_seq?(move_sequence)
+      clone_board = @board.dup
+      clone_piece = clone_board[@position]
+
+      begin
+        clone_piece.perform_moves!(move_sequence)
+      rescue InvalidMoveError
+        false
+      else
+        true
+      end
+    end
+
+    def perform_slide(destination)
+      if valid_slide?(destination)
+        move_to!(destination)
+        maybe_promote
+        true
+      else
+        false
+      end
+    end
+
+    def valid_slide?(destination)
+      move_locations(:slide).include?(destination) &&
+        @board[destination].nil?
+    end
+
+    def perform_jump(destination)
+      if valid_jump?(destination)
+        @board.remove_piece_at(jumped_position(destination))
+        move_to!(destination)
+        maybe_promote
+        true
+      else
+        false
+      end
+    end
+
+    def valid_jump?(destination)
+      move_locations(:jump).include?(destination) &&
+        @board[destination].nil? &&
+        jumps_enemy?(destination)
+    end
+
+    def jumps_enemy?(destination)
+      jumped_piece = @board[jumped_position(destination)]
+
+      return false if jumped_piece.nil?
+      jumped_piece.color != color
+    end
+
+    def jumped_position(destination)
+      dest_y, dest_x = destination
+      curr_y, curr_x = @position
+      [(dest_y + curr_y)/2, (dest_x + curr_x)/2]
+    end
+
     def move_directions
       return RED_DIRS + BLACK_DIRS if king
 
@@ -135,6 +122,14 @@ class Piece
       deltas.map do |(dy, dx)|
         [curr_y + dy, curr_x + dx]
       end.select { |pos| on_the_board?(pos) }
+    end
+
+    def maybe_promote
+      promote if position[0] == (color == :red ? 7 : 0)
+    end
+
+    def promote
+      @king = true
     end
 
     def on_the_board?(pos)
