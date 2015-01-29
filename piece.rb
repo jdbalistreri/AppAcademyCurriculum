@@ -11,11 +11,16 @@ class Piece
 
     @board.place_piece(self)
   end
-  #
-  # def perform_moves!(move_sequence)
-  #
-  #   raise
-  # end
+
+  def perform_moves!(move_sequence)
+    if move_sequence.count == 1
+      move_to(move_sequence.first) #should this raise an error if it fails?
+    else
+      move_sequence.each do |destination|
+        raise InvalidMoveError.new unless perform_jump(destination)
+      end
+    end
+  end
 
   def move_to(destination)
     perform_slide(destination) || perform_jump(destination)

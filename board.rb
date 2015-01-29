@@ -32,6 +32,20 @@ class Board
     self[position] = nil
   end
 
+  def dup
+    clone = Board.new(false)
+
+    pieces.each do |piece|
+      clone.place_piece(Piece.new(piece.color, clone, piece.position.dup))
+    end
+
+    clone
+  end
+
+  def pieces
+    @rows.flatten.compact
+  end
+
   def [](pos)
     y,x = pos
     @rows[y][x]

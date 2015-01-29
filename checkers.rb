@@ -6,3 +6,6 @@ require_relative "game.rb"
 
 class CheckersError < StandardError
 end
+
+class InvalidMoveError <CheckersError
+end
