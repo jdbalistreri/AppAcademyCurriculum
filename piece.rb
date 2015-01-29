@@ -31,8 +31,9 @@ class Piece
   protected
     def perform_moves!(move_sequence)
       if move_sequence.count == 1
-        unless perform_slide(move_sequence.first) || perform_jump(move_sequence.first)
-          raise InvalidMoveError.new
+        unless perform_slide(move_sequence.first) ||
+          perform_jump(move_sequence.first)
+            raise InvalidMoveError.new
         end
       else
         move_sequence.each do |destination|
