@@ -15,10 +15,10 @@ class Piece
     #make it put itself on the board @board.add_piece(self)
   end
 
-  def move(direction)
-    if perform_slide(direction)
+  def move(destination)
+    if perform_slide(destination)
       "Slide performed!"
-    elsif perform_jump(direction)
+    elsif perform_jump(destination)
       "Jump performed!"
     else
       "Not a valid direction"
@@ -26,38 +26,24 @@ class Piece
   end
 
   def perform_slide(destination)
-    move_diffs.include?(destination)
+    if move_locations(slide_deltas).include?(destination)
+      @board.empty?(destination)
+    end
+    false
   end
 
   def perform_jump(destination)
-
-    #return true or false
-  end
-
-  def move_directions
-    possible_directions = []
-
-    if king
-      possible_directions.concat(RED_DIRS).concat(BLACK_DIRS)
-    elsif color == :red
-      possible_directions.concat(RED_DIRS)
-    else
-      possible_directions.concat(BLACK_DIRS)
+    if move_locations(jump_deltas).include?(destination)
+      @board.empty?(destination) && jumps_enemy?(destination)
     end
-
-    possible_directions.concat(possible_directions.map { |(y,x)| [y*2, x*2] })
+    false
   end
 
-  def move_locations
+  def jumps_enemy?(destination)
+    dest_y, dest_x = destination
     curr_y, curr_x = @position
-
-    move_directions.map do |(dy, dx)|
-      [curr_y + dy, curr_x + dx]
-    end.select { |pos| on_the_board?(pos) }
-  end
-
-  def on_the_board?(pos)
-    pos.all? { |coord| coord.between?(0,7) }
+    jumped_location = [(dest_y + curr_y)/2, (dest_x + curr_x)/2]
+    @board[jumped_location]
   end
 
   def promote
@@ -68,5 +54,31 @@ class Piece
     #should ask if it's in the back row - if so, it should promote;
   end
 
+  private
+    def move_directions
+      return RED_DIRS.concat(BLACK_DIRS) if king
+
+      color == :red ? RED_DIRS : BLACK_DIRS
+    end
+
+    def slide_deltas
+      move_directions
+    end
+
+    def jump_deltas
+      move_directions.map { |(y,x)| [y*2, x*2] }
+    end
+
+    def move_locations(deltas)
+      curr_y, curr_x = @position
+
+      deltas.map do |(dy, dx)|
+        [curr_y + dy, curr_x + dx]
+      end.select { |pos| on_the_board?(pos) }
+    end
+
+    def on_the_board?(pos)
+      pos.all? { |coord| coord.between?(0,7) }
+    end
 
 end

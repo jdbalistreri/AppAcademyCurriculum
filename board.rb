@@ -7,7 +7,7 @@ class Board
   end
 
   def fill_board #this could take a true/false value
-    @board = []
+    @rows = Array.new(8) { Array.new(8) }
   end
 
   def add_piece(piece)
@@ -16,6 +16,21 @@ class Board
 
   def remove_piece(position)
     #this should remove a piece, for instance, after a jump
+  end
+
+  def empty?(destination)
+    y, x = destination
+    @rows[y][x].nil?
+  end
+
+  def [](pos)
+    y,x = pos
+    @rows[y][x]
+  end
+
+  def []=(pos, value)
+    y,x = pos
+    @rows[y][x] = value
   end
 
 end
