@@ -12,11 +12,14 @@ class Piece
     @position = position
     @king = false
 
-    #make it put itself on the board @board.add_piece(self)
+    @board.add_piece(self)
   end
 
   def inspect
-    "#{@color} #{@king ? "king" : "piece"} at #{@position}"
+    value = @color == :red ? "red" : "blk"
+    value.upcase! if @king
+    value
+    # "#{@color} #{@king ? "king" : "piece"} at #{@position}"
   end
 
   def move(destination)
@@ -30,17 +33,14 @@ class Piece
   end
 
   def perform_slide(destination)
-    if move_locations(slide_deltas).include?(destination)
-      @board.empty?(destination)
-    end
-    false
+    move_locations(slide_deltas).include?(destination) &&
+      @board[destination].nil?
   end
 
   def perform_jump(destination)
-    if move_locations(jump_deltas).include?(destination)
-      @board.empty?(destination) && jumps_enemy?(destination)
-    end
-    false
+    move_locations(jump_deltas).include?(destination) &&
+      @board[destination].nil? &&
+      jumps_enemy?(destination)
   end
 
   def jumps_enemy?(destination)

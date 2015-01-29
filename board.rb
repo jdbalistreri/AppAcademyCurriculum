@@ -3,12 +3,23 @@ require_relative "checkers.rb"
 class Board
   attr_reader :rows
 
-  def initialize #this could take an empty argument
-    fill_board #make this an array of pieces, need a fill board method
+  def initialize(fill = true)
+    make_board(fill)
   end
 
-  def fill_board #this could take a true/false value
+  def make_board(fill)
     @rows = Array.new(8) { Array.new(8) }
+    [:red, :black].each { |color| fill_board_with(color) } if fill
+  end
+
+  def fill_board_with(color)
+    row_range = color == :red ? (0..2) : (5..7)
+
+    row_range.each do |row|
+      (0..7).each do |col|
+        Piece.new(color, self, [row, col]) if (row + col).odd?
+      end
+    end
   end
 
   def add_piece(piece)
@@ -21,11 +32,6 @@ class Board
     self[position] = nil
   end
 
-  def empty?(destination)
-    y, x = destination
-    @rows[y][x].nil?
-  end
-
   def [](pos)
     y,x = pos
     @rows[y][x]
@@ -35,5 +41,4 @@ class Board
     y,x = pos
     @rows[y][x] = value
   end
-
 end
