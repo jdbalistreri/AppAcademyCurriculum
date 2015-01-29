@@ -2,7 +2,7 @@ require_relative "checkers.rb"
 
 class HumanPlayer
 
-  def initialize(color)
+  def initialize(color, board)
     @color = color
     @board = board
   end
