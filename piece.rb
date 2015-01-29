@@ -3,42 +3,26 @@ require_relative "checkers.rb"
 class Piece
   attr_reader :color, :board, :position, :king
 
-  RED_DIRS   = [[-1,1], [-1,-1]]
-  BLACK_DIRS = [[ 1,1], [ 1,-1]]
+  RED_DIRS   = [[ 1,1], [ 1,-1]]
+  BLACK_DIRS = [[-1,1], [-1,-1]]
 
   def initialize(color, board, position)
-    @color = color
-    @board = board
-    @position = position
-    @king = false
+    @color, @board, @position, @king = color, board, position, false
 
     @board.add_piece(self)
   end
 
-  def inspect
-    value = @color == :red ? "red" : "blk"
-    value.upcase! if @king
-    value
-    # "#{@color} #{@king ? "king" : "piece"} at #{@position}"
-  end
-
   def move(destination)
-    if perform_slide(destination)
-      "Slide performed!"
-    elsif perform_jump(destination)
-      "Jump performed!"
-    else
-      "Not a valid direction"
-    end
+    perform_slide(destination) || perform_jump(destination)
   end
 
   def perform_slide(destination)
-    move_locations(slide_deltas).include?(destination) &&
+    move_locations(:slide).include?(destination) &&
       @board[destination].nil?
   end
 
   def perform_jump(destination)
-    move_locations(jump_deltas).include?(destination) &&
+    move_locations(:jump).include?(destination) &&
       @board[destination].nil? &&
       jumps_enemy?(destination)
   end
@@ -60,22 +44,22 @@ class Piece
     #should ask if it's in the back row - if so, it should promote;
   end
 
-  private
+  def inspect
+    value = @color == :red ? "red" : "blk"
+    @king ? value.upcase : value
+  end
+
+  # private
     def move_directions
       return RED_DIRS.concat(BLACK_DIRS) if king
 
       color == :red ? RED_DIRS : BLACK_DIRS
     end
 
-    def slide_deltas
-      move_directions
-    end
+    def move_locations(move_type)
+      deltas = move_directions.dup
+      deltas.map! { |(y,x)| [y*2, x*2] } if move_type == :jump
 
-    def jump_deltas
-      move_directions.map { |(y,x)| [y*2, x*2] }
-    end
-
-    def move_locations(deltas)
       curr_y, curr_x = @position
 
       deltas.map do |(dy, dx)|
