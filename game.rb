@@ -4,8 +4,8 @@ class CheckersGame
 
   def initialize
     @board = Board.new
-    @player1 = HumanPlayer.new(:black)
-    @player2 = HumanPlayer.new(:red)
+    @player1 = HumanPlayer.new(:black, @board)
+    @player2 = HumanPlayer.new(:red, @board)
   end
 
 
@@ -16,15 +16,13 @@ class CheckersGame
       begin
         @board.display
         piece = @board[@current_player.select_piece]
+        raise InvalidMoveError.new "You chose an empty square" if piece.nil?
+
         moves = @current_player.select_move_sequence
 
         piece.perform_moves(moves)
-      rescue ArgumentError => e
-        puts "Invalid input:"
-        puts e
-        retry
-      rescue CheckersError => e
-        puts "Invalid move(s):"
+      rescue InvalidMoveError => e
+        puts "Invalid move:"
         puts e
         retry
       end

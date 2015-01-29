@@ -17,9 +17,15 @@ class Board
   end
 
   def render
-    @rows.map do |row|
-      row.map { |x| x.nil? ? "   " : x.inspect }.join(" ")
+    row_num = -1
+    output = @rows.map do |row|
+      row_num += 1
+      row_array = [row_num]
+      row_array += row.map { |x| x.nil? ? "   " : x.inspect }
+      row_array.join(" ")
     end
+    output += ["   #{(0..7).to_a.join("   ")}"]
+    output
   end
 
   def make_board(fill)
@@ -42,7 +48,7 @@ class Board
   end
 
   def remove_piece_at(position)
-    raise CheckersError.new "No piece at that position" if self[position].nil?
+    raise InvalidMoveError.new "No piece at that position" if self[position].nil?
 
     self[position] = nil
   end
