@@ -15,6 +15,10 @@ class Piece
     #make it put itself on the board @board.add_piece(self)
   end
 
+  def inspect
+    "#{@color}#{" King" if @king} at #{@position}"
+  end
+
   def move(destination)
     if perform_slide(destination)
       "Slide performed!"
@@ -42,8 +46,10 @@ class Piece
   def jumps_enemy?(destination)
     dest_y, dest_x = destination
     curr_y, curr_x = @position
-    jumped_location = [(dest_y + curr_y)/2, (dest_x + curr_x)/2]
-    @board[jumped_location]
+    jumped_piece = @board[[(dest_y + curr_y)/2, (dest_x + curr_x)/2]]
+
+    raise "You must jump over something." if jumped_piece.nil?
+    jumped_piece.color != color
   end
 
   def promote
