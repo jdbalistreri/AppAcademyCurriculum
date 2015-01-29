@@ -114,6 +114,11 @@ class Piece
     end
   end
 
+  def valid_moves
+    move_locations(:slide).select { |move| valid_slide?(move) } +
+      move_locations(:jump).select { |move| valid_jump?(move) }
+  end
+
   # private
     def move_directions
       return RED_DIRS + BLACK_DIRS if king
@@ -135,5 +140,4 @@ class Piece
     def on_the_board?(pos)
       pos.all? { |coord| coord.between?(0,7) }
     end
-
 end

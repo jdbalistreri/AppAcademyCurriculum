@@ -1,6 +1,5 @@
 require_relative "checkers.rb"
 require "colorize"
-require "terminfo"
 
 class Board
   attr_reader :rows
@@ -9,9 +8,10 @@ class Board
     make_board(fill)
   end
 
-  def game_over?
+  def game_over?(current_player_color)
+    player_pieces = pieces.select { |piece| piece.color == current_player_color }
+    return true if player_pieces.empty? || player_pieces.none? { |piece| !piece.valid_moves.empty? }
     false
-    #check
   end
 
   def display

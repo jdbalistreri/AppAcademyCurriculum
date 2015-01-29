@@ -2,13 +2,14 @@ require_relative "checkers.rb"
 
 class HumanPlayer
 
+  attr_reader :color
+
   def initialize(color, board)
     @color = color
     @board = board
   end
 
   def select_piece
-    puts "#{@color.to_s.capitalize}'s turn."
     print "Which piece (e.g. '1,2') would you like to move?  "
     position = parse_pos(gets.chomp)
 
@@ -45,8 +46,9 @@ class HumanPlayer
 
 end
 
-
 class ComputerPlayer
+
+  attr_reader :color
 
   def initialize(color, board)
     @color = color
@@ -55,12 +57,12 @@ class ComputerPlayer
 
   def select_piece
     @my_pieces = @board.pieces.select { |piece| piece.color == color }
-    @my_pieces.select! { |piece| piece }
+    @current_piece = @my_pieces.select { |piece| !piece.valid_moves.empty? }.sample
+    sleep(0.25)
+    @current_piece.position
   end
 
   def select_move_sequence
-
+    [@current_piece.valid_moves.sample]
   end
-
-
 end
