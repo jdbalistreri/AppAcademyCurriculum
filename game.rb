@@ -1,6 +1,6 @@
 require_relative "checkers.rb"
 
-class Board
+class CheckersGame
 
   def initialize
 
