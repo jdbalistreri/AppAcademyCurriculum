@@ -12,16 +12,27 @@ class Piece
     @board.place_piece(self)
   end
 
-  def move(destination)
+  def move_to(destination)
     perform_slide(destination) || perform_jump(destination)
   end
 
   def perform_slide(destination)
-    valid_slide?(destination) && move_to!(destination)
+    if valid_slide?(destination)
+      move_to!(destination)
+    else
+      false
+    end
   end
 
   def perform_jump(destination)
-    valid_jump?(destination) && move_to!(destination)
+    if valid_jump?(destination)
+      @board.remove_piece_at(jumped_position(destination))
+      move_to!(destination)
+
+      true
+    else
+      false
+    end
   end
 
   def move_to!(destination)
@@ -29,8 +40,6 @@ class Piece
 
     @position = destination
     @board.place_piece(self)
-
-    true
   end
 
   def valid_slide?(destination)
@@ -45,12 +54,16 @@ class Piece
   end
 
   def jumps_enemy?(destination)
-    dest_y, dest_x = destination
-    curr_y, curr_x = @position
-    jumped_piece = @board[[(dest_y + curr_y)/2, (dest_x + curr_x)/2]]
+    jumped_piece = @board[jumped_position(destination)]
 
     raise "You must jump over something." if jumped_piece.nil?
     jumped_piece.color != color
+  end
+
+  def jumped_position(destination)
+    dest_y, dest_x = destination
+    curr_y, curr_x = @position
+    [(dest_y + curr_y)/2, (dest_x + curr_x)/2]
   end
 
   def promote
