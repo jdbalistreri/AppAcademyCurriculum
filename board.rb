@@ -7,6 +7,21 @@ class Board
     make_board(fill)
   end
 
+  def game_over?
+    false
+    #check
+  end
+
+  def display
+    puts render
+  end
+
+  def render
+    @rows.map do |row|
+      row.map { |x| x.nil? ? "   " : x.inspect }.join(" ")
+    end
+  end
+
   def make_board(fill)
     @rows = Array.new(8) { Array.new(8) }
     [:red, :black].each { |color| fill_board_with(color) } if fill
