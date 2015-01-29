@@ -9,7 +9,7 @@ class Piece
   def initialize(color, board, position)
     @color, @board, @position, @king = color, board, position, false
 
-    @board.add_piece(self)
+    @board.place_piece(self)
   end
 
   def move(destination)
@@ -17,11 +17,28 @@ class Piece
   end
 
   def perform_slide(destination)
+    valid_slide?(destination) && move_to!(destination)
+  end
+
+  def perform_jump(destination)
+    valid_jump?(destination) && move_to!(destination)
+  end
+
+  def move_to!(destination)
+    @board.remove_piece_at(@position)
+
+    @position = destination
+    @board.place_piece(self)
+
+    true
+  end
+
+  def valid_slide?(destination)
     move_locations(:slide).include?(destination) &&
       @board[destination].nil?
   end
 
-  def perform_jump(destination)
+  def valid_jump?(destination)
     move_locations(:jump).include?(destination) &&
       @board[destination].nil? &&
       jumps_enemy?(destination)

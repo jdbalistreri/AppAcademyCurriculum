@@ -22,7 +22,7 @@ class Board
     end
   end
 
-  def add_piece(piece)
+  def place_piece(piece)
     self[piece.position] = piece
   end
 
