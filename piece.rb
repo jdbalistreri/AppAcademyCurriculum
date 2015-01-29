@@ -5,12 +5,9 @@ require "colorize"
 class Piece
   attr_reader :color, :board, :position, :king
 
-  RED_DIRS   = [[ 1,1], [ 1,-1]]
-  BLACK_DIRS = [[-1,1], [-1,-1]]
-
   def initialize(color, board, position, king = false)
     @color, @board, @position, @king = color, board, position, king
-    @board.place_piece(self)
+    @board[position] = self
   end
 
   def perform_moves(move_sequence)
@@ -42,12 +39,15 @@ class Piece
       end
     end
 
+    RED_DIRS   = [[ 1,1], [ 1,-1]]
+    BLACK_DIRS = [[-1,1], [-1,-1]]
+
   private
     def move_to!(destination)
-      @board.remove_piece_at(@position)
+      @board[@position] = nil
 
       @position = destination
-      @board.place_piece(self)
+      @board[destination] = self
     end
 
     def valid_move_seq?(move_sequence)
@@ -80,7 +80,7 @@ class Piece
 
     def perform_jump(destination)
       if valid_jump?(destination)
-        @board.remove_piece_at(jumped_position(destination))
+        @board[(jumped_position(destination))] = nil
         move_to!(destination)
         maybe_promote
         true

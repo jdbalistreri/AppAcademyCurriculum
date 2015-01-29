@@ -6,16 +6,6 @@ class Board
     make_board(fill)
   end
 
-  def place_piece(piece)
-    self[piece.position] = piece
-  end
-
-  def remove_piece_at(position)
-    raise InvalidMoveError.new "No piece at that position" if self[position].nil?
-
-    self[position] = nil
-  end
-
   def game_over?(player_color)
     player_pieces = pieces.select { |piece| piece.color == player_color }
     return true if player_pieces.empty? ||
