@@ -10,6 +10,10 @@ class Piece
     @board[position] = self
   end
 
+  def dup(new_board)
+    Piece.new(color, new_board, position.dup, king)
+  end
+
   def perform_moves(move_sequence)
     raise InvalidMoveError unless valid_move_seq?(move_sequence)
     perform_moves!(move_sequence)

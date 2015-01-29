@@ -24,13 +24,9 @@ class Board
   end
 
   def dup
-    clone = Board.new(false)
-
-    pieces.each do |piece|
-      Piece.new(piece.color, clone, piece.position.dup, piece.king)
+    pieces.each_with_object(Board.new(false)) do
+      |piece, new_board| piece.dup(new_board)
     end
-
-    clone
   end
 
   def display
