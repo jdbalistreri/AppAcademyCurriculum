@@ -6,19 +6,37 @@ class Piece
   RED_DIRS   = [[ 1,1], [ 1,-1]]
   BLACK_DIRS = [[-1,1], [-1,-1]]
 
-  def initialize(color, board, position)
-    @color, @board, @position, @king = color, board, position, false
+  def initialize(color, board, position, king = false)
+    @color, @board, @position, @king = color, board, position, king
 
     @board.place_piece(self)
   end
 
+  def perform_moves(move_sequence)
+    raise InvalidMoveError unless valid_move_seq?(move_sequence)
+    perform_moves!(move_sequence)
+  end
+
   def perform_moves!(move_sequence)
     if move_sequence.count == 1
-      move_to(move_sequence.first) #should this raise an error if it fails?
+      raise InvalidMoveError.new unless move_to(move_sequence.first)
     else
       move_sequence.each do |destination|
         raise InvalidMoveError.new unless perform_jump(destination)
       end
+    end
+  end
+
+  def valid_move_seq?(move_sequence)
+    clone_board = @board.dup
+    clone_piece = clone_board[@position]
+
+    begin
+      clone_piece.perform_moves!(move_sequence)
+    rescue InvalidMoveError
+      false
+    else
+      true
     end
   end
 
@@ -29,6 +47,7 @@ class Piece
   def perform_slide(destination)
     if valid_slide?(destination)
       move_to!(destination)
+      maybe_promote
       true
     else
       false
@@ -39,6 +58,7 @@ class Piece
     if valid_jump?(destination)
       @board.remove_piece_at(jumped_position(destination))
       move_to!(destination)
+      maybe_promote
       true
     else
       false
@@ -81,7 +101,7 @@ class Piece
   end
 
   def maybe_promote
-    #should ask if it's in the back row - if so, it should promote;
+    promote if position[0] == (color == :red ? 7 : 0)
   end
 
   def inspect
@@ -91,7 +111,7 @@ class Piece
 
   # private
     def move_directions
-      return RED_DIRS.concat(BLACK_DIRS) if king
+      return RED_DIRS + BLACK_DIRS if king
 
       color == :red ? RED_DIRS : BLACK_DIRS
     end

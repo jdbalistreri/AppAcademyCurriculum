@@ -36,7 +36,7 @@ class Board
     clone = Board.new(false)
 
     pieces.each do |piece|
-      clone.place_piece(Piece.new(piece.color, clone, piece.position.dup))
+      Piece.new(piece.color, clone, piece.position.dup, piece.king)
     end
 
     clone
