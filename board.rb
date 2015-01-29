@@ -1,4 +1,6 @@
 require_relative "checkers.rb"
+require "colorize"
+require "terminfo"
 
 class Board
   attr_reader :rows
@@ -13,18 +15,32 @@ class Board
   end
 
   def display
+    display_header
     puts render
   end
 
+  def display_header
+    puts "\e[H\e[2J"
+    puts "---*~*~*~*~ CHECKERS ~*~*~*~*---"
+    2.times { puts "" }
+  end
+
   def render
+    tile_count = 0
     row_num = -1
     output = @rows.map do |row|
       row_num += 1
-      row_array = [row_num]
-      row_array += row.map { |x| x.nil? ? "   " : x.inspect }
-      row_array.join(" ")
+      tile_count += 1
+      row_array = ["   ", row_num]
+      row_array += row.map do |x|
+        tile_count += 1
+        string = x.nil? ? "   " : x.render
+        string = tile_count.odd? ? string.colorize(background: :green) : string.colorize(background: :white)
+        string
+      end
+      row_array.join("")
     end
-    output += ["   #{(0..7).to_a.join("   ")}"]
+    output += ["     #{(0..7).to_a.join("  ")}"]
     output
   end
 

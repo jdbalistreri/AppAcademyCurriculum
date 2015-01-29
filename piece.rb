@@ -1,4 +1,6 @@
+# encoding: utf-8
 require_relative "checkers.rb"
+require "colorize"
 
 class Piece
   attr_reader :color, :board, :position, :king
@@ -104,9 +106,12 @@ class Piece
     promote if position[0] == (color == :red ? 7 : 0)
   end
 
-  def inspect
-    value = @color == :red ? "red" : "blk"
-    @king ? value.upcase : value
+  def render
+    if @king
+      @color == :red ? " ♚ ".colorize(:red) : " ♚ ".colorize(:black)
+    else
+      @color == :red ? " ♟ ".colorize(:red) : " ♟ ".colorize(:black)
+    end
   end
 
   # private
