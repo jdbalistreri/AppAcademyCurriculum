@@ -20,8 +20,8 @@ class Piece
   end
 
   def render
-    value = @king ? " ♚ " : " ♟ "
-    @color == :red ? value.colorize(:red) : value.colorize(:black)
+    char = @king ? " ♚ " : " ♟ "
+    (@color == :red) ? char.colorize(:red) : char.colorize(:black)
   end
 
   def valid_moves
@@ -56,10 +56,9 @@ class Piece
 
     def valid_move_seq?(move_sequence)
       clone_board = @board.dup
-      clone_piece = clone_board[@position]
 
       begin
-        clone_piece.perform_moves!(move_sequence)
+        clone_board[@position].perform_moves!(move_sequence)
       rescue InvalidMoveError
         false
       else
@@ -130,11 +129,7 @@ class Piece
     end
 
     def maybe_promote
-      promote if position[0] == (color == :red ? 7 : 0)
-    end
-
-    def promote
-      @king = true
+      @king = true if position[0] == (color == :red ? 7 : 0)
     end
 
     def on_the_board?(pos)
