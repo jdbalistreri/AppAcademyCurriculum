@@ -2,19 +2,20 @@ require_relative 'index'
 
 class Reply
   extend Table
+  extend Writeable
 
   def self.table_name
     "replies"
   end
 
-  def self.find_by_user_id(user_id)
-    results = QuestionsDatabase.instance.execute(<<-SQL, user_id)
+  def self.find_by_question_id(question_id)
+    results = QuestionsDatabase.instance.execute(<<-SQL, question_id)
       SELECT
         *
       FROM
         #{table_name}
       WHERE
-        #{table_name}.author_id = ?;
+        #{table_name}.question_id = ?;
     SQL
 
     results.map{|result| Reply.new(result)}

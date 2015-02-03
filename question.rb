@@ -2,22 +2,10 @@ require_relative 'index'
 
 class Question
   extend Table
+  extend Writeable
 
   def self.table_name
     "questions"
-  end
-
-  def self.find_by_author(author_id)
-    results = QuestionsDatabase.instance.execute(<<-SQL, author_id)
-      SELECT
-        *
-      FROM
-        #{table_name}
-      WHERE
-        #{table_name}.author_id = ?
-    SQL
-
-    results.map{|result| Question.new(result)}
   end
 
   attr_accessor :id, :title, :body, :author_id
@@ -30,15 +18,6 @@ class Question
   end
 
   def author
-    results = QuestionsDatabase.instance.execute(<<-SQL)
-      SELECT
-        *
-      FROM
-        #{User.table_name}
-      WHERE
-        #{User.table_name}.id = #{author_id}
-    SQL
-
-    User.new(results.first)
+    User.find_by_id(author_id)
   end
 end

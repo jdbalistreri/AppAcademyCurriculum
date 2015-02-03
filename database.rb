@@ -25,3 +25,19 @@ module Table
     self.new(results.first)
   end
 end
+
+module Writeable
+  def find_by_author(author_id)
+    results = QuestionsDatabase.instance.execute(<<-SQL, author_id)
+      SELECT
+        *
+      FROM
+        #{table_name}
+      WHERE
+        #{table_name}.author_id = ?;
+    SQL
+
+    results.map{|result| Reply.new(result)}
+  end
+
+end
