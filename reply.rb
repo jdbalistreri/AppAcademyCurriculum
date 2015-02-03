@@ -43,4 +43,10 @@ class Reply
     parent_id && Reply.find_by_id(parent_id)
   end
 
+  def child_replies
+    Reply.find_by_question_id(question_id).select do |reply|
+      reply.parent_id == id
+    end
+  end
+
 end
