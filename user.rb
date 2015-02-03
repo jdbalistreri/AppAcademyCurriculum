@@ -20,6 +20,29 @@ class User
     self.new(users.first)
   end
 
+  def self.karma_for_user_id(user_id)
+    karma_array = QuestionsDatabase.instance.execute(<<-SQL, user_id)
+    SELECT
+      CAST(num_likes AS FLOAT) / CAST(num_questions AS FLOAT) karma
+    FROM
+      (SELECT
+        COUNT(question_likes.id) num_likes,
+        COUNT(DISTINCT questions.id) num_questions,
+        users.id user_id
+      FROM
+        users
+      LEFT OUTER JOIN
+        questions ON questions.author_id = ?
+      LEFT OUTER JOIN
+        question_likes ON question_likes.question_id = questions.id
+      GROUP BY
+        users.id);
+    SQL
+
+    karma_array.first['karma'] || 0
+
+  end
+
   attr_accessor :id, :fname, :lname
 
   def initialize(options = {})
@@ -38,6 +61,33 @@ class User
 
   def followed_questions
     QuestionFollower.questions_for_follower_id(id)
+  end
+
+  def liked_questions
+    QuestionLike.liked_questions_for_user_id(id)
+  end
+
+  def average_karma
+    User.karma_for_user_id(id)
+  end
+
+  def save
+    if #not saved
+      QuestionsDatabase.instance.execute(<<-SQL, fname, lname)
+        INSERT INTO
+          users (fname, lname)
+        VALUES
+          (?, ?)
+      SQL
+    else #update
+      QuestionsDatabase.instance.execute(<<-SQL, fname, lname, id)
+        UPDATE
+          users
+        SET
+          fname = ?, lname = ?
+        WHERE
+          id = ?;
+    end
   end
 
 end

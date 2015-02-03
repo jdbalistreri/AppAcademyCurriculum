@@ -24,6 +24,18 @@ module Table
 
     self.new(instances.first)
   end
+
+  def all
+    instances = QuestionsDatabase.instance.execute(<<-SQL)
+      SELECT
+        *
+      FROM
+        #{table_name}
+    SQL
+
+    instances.map { |info| self.new(info)}
+  end
+
 end
 
 module Writeable

@@ -1,15 +1,47 @@
 SELECT
-  users.*
+  CAST(num_likes AS FLOAT) / CAST(num_questions AS FLOAT) karma
 FROM
-  question_likes
-JOIN
-  users ON question_likes.liker_id = users.id
+  (SELECT
+    COUNT(question_likes.id) num_likes,
+    COUNT(DISTINCT questions.id) num_questions,
+    users.id user_id
+  FROM
+    users
+  LEFT OUTER JOIN
+    questions ON questions.author_id = users.id
+  LEFT OUTER JOIN
+    question_likes ON question_likes.question_id = questions.id
+  GROUP BY
+    users.id)
 WHERE
-  question_likes.question_id = 2
+  user_id = 1
 
 
+  CAST(num_likes AS FLOAT) / CAST(COUNT(DISTINCT questions.id) AS FLOAT) karma
 
-
+    -- SELECT
+    --   CAST((SELECT
+    --     COUNT(*)
+    --   FROM
+    --     users
+    --   JOIN
+    --     questions ON questions.author_id = users.id
+    --   JOIN
+    --     question_likes ON question_likes.question_id = questions.id
+    --   WHERE
+    --     users.id = 1
+    --   GROUP BY
+    --     users.id) AS FLOAT) /
+    --   CAST((SELECT
+    --     COUNT(*)
+    --   FROM
+    --     users
+    --   JOIN
+    --     questions ON questions.author_id = users.id
+    --   WHERE
+    --     users.id = 1
+    --   GROUP BY
+    --     users.id) AS FLOAT);
 
 
 
