@@ -14,10 +14,10 @@ FROM
   GROUP BY
     users.id)
 WHERE
-  user_id = 1
+  user_id = 6
 
 
-  CAST(num_likes AS FLOAT) / CAST(COUNT(DISTINCT questions.id) AS FLOAT) karma
+  #CAST(num_likes AS FLOAT) / CAST(COUNT(DISTINCT questions.id) AS FLOAT) karma
 
     -- SELECT
     --   CAST((SELECT
