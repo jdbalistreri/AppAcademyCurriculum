@@ -31,4 +31,16 @@ class Reply
     @body = options['body']
   end
 
+  def author
+    User.find_by_id(author_id)
+  end
+
+  def question
+    Question.find_by_id(question_id)
+  end
+
+  def parent_reply
+    parent_id && Reply.find_by_id(parent_id)
+  end
+
 end
