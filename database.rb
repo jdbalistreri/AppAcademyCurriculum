@@ -13,7 +13,7 @@ end
 
 module Table
   def find_by_id(id)
-    results = QuestionsDatabase.instance.execute(<<-SQL, id)
+    instances = QuestionsDatabase.instance.execute(<<-SQL, id)
       SELECT
         *
       FROM
@@ -22,13 +22,13 @@ module Table
         #{table_name}.id = ?;
     SQL
 
-    self.new(results.first)
+    self.new(instances.first)
   end
 end
 
 module Writeable
   def find_by_author(author_id)
-    results = QuestionsDatabase.instance.execute(<<-SQL, author_id)
+    writables = QuestionsDatabase.instance.execute(<<-SQL, author_id)
       SELECT
         *
       FROM
@@ -37,7 +37,7 @@ module Writeable
         #{table_name}.author_id = ?;
     SQL
 
-    results.map{|result| Reply.new(result)}
+    writables.map{|info| self.new(info)}
   end
 
 end

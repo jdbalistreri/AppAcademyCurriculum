@@ -9,7 +9,7 @@ class Reply
   end
 
   def self.find_by_question_id(question_id)
-    results = QuestionsDatabase.instance.execute(<<-SQL, question_id)
+    replies = QuestionsDatabase.instance.execute(<<-SQL, question_id)
       SELECT
         *
       FROM
@@ -18,7 +18,7 @@ class Reply
         #{table_name}.question_id = ?;
     SQL
 
-    results.map{|result| Reply.new(result)}
+    replies.map{|result| Reply.new(result)}
   end
 
   attr_accessor :id, :question_id, :parent_id, :author_id, :body

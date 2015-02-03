@@ -8,7 +8,7 @@ class QuestionFollower
   end
 
   def self.followers_for_question_id(question_id)
-    results = QuestionsDatabase.instance.execute(<<-SQL, question_id)
+    users = QuestionsDatabase.instance.execute(<<-SQL, question_id)
       SELECT
         users.*
       FROM
@@ -19,11 +19,11 @@ class QuestionFollower
         question_followers.question_id = ?;
     SQL
 
-    results.map { |user_info| User.new(user_info) }
+    users.map { |user_info| User.new(user_info) }
   end
 
   def self.questions_for_follower_id(user_id)
-    results = QuestionsDatabase.instance.execute(<<-SQL, user_id)
+    questions = QuestionsDatabase.instance.execute(<<-SQL, user_id)
       SELECT
         questions.*
       FROM
@@ -36,11 +36,11 @@ class QuestionFollower
         question_followers.follower_id = ?;
     SQL
 
-    results.map { |question_info| Question.new(question_info) }
+    questions.map { |question_info| Question.new(question_info) }
   end
 
   def self.most_followed_questions(n)
-    results = QuestionsDatabase.instance.execute(<<-SQL, n)
+    questions = QuestionsDatabase.instance.execute(<<-SQL, n)
       SELECT
         questions.*
       FROM
@@ -55,7 +55,7 @@ class QuestionFollower
         ?
     SQL
 
-    results.map { |question_info| Question.new(question_info) }
+    questions.map { |question_info| Question.new(question_info) }
 
   end
 

@@ -8,7 +8,7 @@ class User
   end
 
   def self.find_by_name(fname, lname)
-    results = QuestionsDatabase.instance.execute(<<-SQL, fname, lname)
+    users = QuestionsDatabase.instance.execute(<<-SQL, fname, lname)
       SELECT
         *
       FROM
@@ -17,7 +17,7 @@ class User
         #{table_name}.fname = ? AND #{table_name}.lname = ?;
     SQL
 
-    self.new(results.first)
+    self.new(users.first)
   end
 
   attr_accessor :id, :fname, :lname
