@@ -89,6 +89,14 @@ def title_tracks
   # A 'title track' has a `song` that is the same as its album's `title`. Select
   # the names of all the title tracks.
   execute(<<-SQL)
+    SELECT
+      a.title
+    FROM
+      albums a
+    JOIN
+      tracks t ON a.asin = t.album
+    WHERE
+      t.song = a.title
   SQL
 end
 
@@ -96,6 +104,12 @@ def eponymous_albums
   # An 'eponymous album' has a `title` that is the same as its recording
   # artist's name. Select the titles of all the eponymous albums.
   execute(<<-SQL)
+    SELECT
+      a.title
+    FROM
+      albums a
+    WHERE
+      a.title = a.artist
   SQL
 end
 
@@ -103,6 +117,14 @@ def song_title_counts
   # Select the song names that appear on more than two albums. Also select the
   # COUNT of times they show up.
   execute(<<-SQL)
+    SELECT DISTINCT
+      t.song, count(album)
+    FROM
+      tracks t
+    GROUP BY
+      t.song
+    HAVING
+      count(album) > 2
   SQL
 end
 
@@ -111,6 +133,16 @@ def best_value
   # pence. Find the good value albums - show the title, the price and the number
   # of tracks.
   execute(<<-SQL)
+    SELECT
+      a.title, a.price, count(t.song)
+    FROM
+      albums a
+    JOIN
+      tracks t ON a.asin = t.album
+    GROUP BY
+      a.title, a.price
+    HAVING
+      a.price / count(t.song) < .5
   SQL
 end
 
@@ -119,6 +151,18 @@ def top_track_counts
   # tracks. List the top 10 albums in order of track count. Select both the
   # album title and the track count.
   execute(<<-SQL)
+    SELECT
+      a.title, count(t.song)
+    FROM
+      albums a
+    JOIN
+      tracks t ON a.asin = t.album
+    GROUP BY
+      a.title
+    ORDER BY
+      count(t.song) DESC
+    LIMIT
+      10
   SQL
 end
 
@@ -126,6 +170,20 @@ def soundtrack_wars
   # Select the artist who has recorded the most soundtracks, as well as the
   # number of albums. HINT: use LIKE '%Soundtrack%' in your query.
   execute(<<-SQL)
+    SELECT
+      a.artist, count(a.title)
+    FROM
+      styles s
+    JOIN
+      albums a ON s.album = a.asin
+    WHERE
+      s.style LIKE '%Soundtrack%'
+    GROUP BY
+      a.artist
+    ORDER BY
+      count(a.title) DESC
+    LIMIT
+      1
   SQL
 end
 
