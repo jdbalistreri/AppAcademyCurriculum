@@ -36,4 +36,8 @@ class User
     Reply.find_by_user_id(id)
   end
 
+  def followed_questions
+    QuestionFollower.questions_for_follower_id(id)
+  end
+
 end

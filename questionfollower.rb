@@ -48,16 +48,3 @@ class QuestionFollower
   end
 
 end
-
-
-#
-# results = QuestionsDatabase.instance.execute(<<-SQL, id)
-#   SELECT
-#     *
-#   FROM
-#     #{table_name}
-#   WHERE
-#     #{table_name}.id = ?;
-# SQL
-#
-# self.new(results.first)
