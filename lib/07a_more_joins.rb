@@ -192,5 +192,28 @@ def expensive_tastes
   # along with the price per track. One or more of each aggregate functions,
   # subqueries, and joins will be required.
   execute(<<-SQL)
+    SELECT
+      s.style, avg(ppt)
+    FROM
+      styles s
+    JOIN
+      (SELECT
+        a.asin, a.price / count(t.song) ppt
+      FROM
+        albums a
+      JOIN
+        tracks t ON a.asin = t.album
+      GROUP BY
+        a.asin, a.price) p ON p.asin = s.album
+    GROUP BY
+      s.style
+    HAVING
+      avg(ppt) > 0
+    ORDER BY
+      avg(ppt) DESC
+    LIMIT
+      5
+
+
   SQL
 end

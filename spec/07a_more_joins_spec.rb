@@ -160,8 +160,8 @@ describe "music JOINs" do
         ["Styles > Classical > Historical Periods > Romantic (c.1820-1910) > Forms & Genres > Theatrical, Inci", "2.3557142857142857"],
         ["Styles > Classical > Forms & Genres > Theatrical, Incidental & Program Music > Incidental Music", "2.3557142857142857"],
         ["Styles > Classical > Historical Periods > Romantic (c.1820-1910) > Ballets & Dances", "2.3557142857142857"],
-        ["Styles > Classical > Symphonies > General", "1.8980000000000000"],
-        ["Styles > Classical > Forms & Genres > Symphonies > Romantic", "1.8980000000000000"]
+        ["Styles > Classical > Symphonies > General", "1.9266071428571429"],
+        ["Styles > Classical > Forms & Genres > Symphonies > Romantic", "1.9266071428571429"]
       ])
     end
   end
