@@ -8,6 +8,10 @@ class Question
     "questions"
   end
 
+  def self.most_followed(n)
+    QuestionFollower.most_followed_questions(n)
+  end
+
   attr_accessor :id, :title, :body, :author_id
 
   def initialize(options = {})
