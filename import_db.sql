@@ -23,13 +23,13 @@ CREATE TABLE replies(
   id INTEGER PRIMARY KEY,
   question_id INTEGER NOT NULL,
   parent_id INTEGER,
-  user_id INTEGER NOT NULL,
+  author_id INTEGER NOT NULL,
   body TEXT NOT NULL
 );
 
 CREATE TABLE question_likes(
   id INTEGER PRIMARY KEY,
-  user_id INTEGER NOT NULL,
+  liker_id INTEGER NOT NULL,
   question_id INTEGER NOT NULL
 );
 
@@ -47,6 +47,7 @@ INSERT INTO
   questions(title, body, author_id)
 VALUES
   ('Intro', 'Where is App Academy located?', 1),
+  ('Day 0', 'Where are you from?', 1),
   ('Day1', 'Where can we find day 1 exercises?', 2),
   ('Jobs', 'Will we really get jobs?', 4);
 
@@ -63,7 +64,7 @@ VALUES
   (3, 5);
 
 INSERT INTO
-  replies(question_id, parent_id, user_id, body)
+  replies(question_id, parent_id, author_id, body)
 VALUES
   (1, NULL, 1, 'NYC'),
   (1, 1, 2, '598 Broadway'),
@@ -73,7 +74,7 @@ VALUES
   (3, NULL, 4, 'YEP');
 
 INSERT INTO
-  question_likes(user_id, question_id)
+  question_likes(liker_id, question_id)
 VALUES
   (2, 3),
   (1, 2),

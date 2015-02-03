@@ -24,7 +24,6 @@ module Table
 
     self.new(results.first)
   end
-
 end
 
 class User
@@ -34,10 +33,50 @@ class User
     "users"
   end
 
+  def self.find_by_name(fname, lname)
+    results = QuestionsDatabase.instance.execute(<<-SQL, fname, lname)
+      SELECT
+        *
+      FROM
+        #{table_name}
+      WHERE
+        #{table_name}.fname = ? AND #{table_name}.lname = ?;
+    SQL
+
+    self.new(results.first)
+  end
+
   def initialize(options = {})
     @id    = options['id']
     @fname = options['fname']
     @lname = options['lname']
+  end
+
+  def authored_questions
+    results = QuestionsDatabase.instance.execute(<<-SQL)
+      SELECT
+        *
+      FROM
+        #{Question.table_name}
+      WHERE
+        #{Question.table_name}.author_id = #{@id};
+    SQL
+
+    results.map{|result| Question.new(result)}
+  end
+
+  def authored_replies
+    results = QuestionsDatabase.instance.execute(<<-SQL)
+      SELECT
+        *
+      FROM
+        #{Reply.table_name}
+      WHERE
+        #{Reply.table_name}.author_id = #{@id};
+    SQL
+
+    results.map{|result| Reply.new(result)}
+
   end
 
 end
@@ -84,6 +123,7 @@ class Reply
     @id    = options['id']
     @question_id = options['question_id']
     @parent_id = options['parent_id']
+    @author_id = options['author_id']
     @body = options['body']
   end
 
@@ -98,7 +138,7 @@ class QuestionLike
 
   def initialize(options = {})
     @id    = options['id']
-    @user_id = options['user_id']
+    @liker_id = options['liker_id']
     @question_id = options['question_id']
   end
 
