@@ -33,6 +33,14 @@ class ShortenedUrl < ActiveRecord::Base
   :primary_key => :id
   )
 
+  has_many(
+  :taggings,
+  :class_name => 'Tagging',
+  :foreign_key => :url_id,
+  :primary_key => :id
+  )
+
+  has_many :tag_topics, through: :taggings, source: :tag_topic
   has_many :visitors, Proc.new { distinct }, through: :visits, source: :visitor
 
   def num_clicks
