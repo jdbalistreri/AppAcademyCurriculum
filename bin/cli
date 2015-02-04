@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 
 #user email section
 puts "Input your email"
@@ -36,7 +37,8 @@ when 1
   else
     "Long URL is: #{long_url.long_url}"
     Launchy.open(long_url.long_url)
-  end 
+    Visit.create!(visitor_id: current_user.id, url_id: long_url.id)
+  end
 else
   puts "Congrats, you input the wrong number."
 end

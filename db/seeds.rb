@@ -5,3 +5,27 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+emails = ["joe@example.com", "chris@example.com", "jonathan@appacademy.io",
+          'conzjiang@example.com', 'mr.ruffles@chips.com']
+emails.each { |email| User.create!(email: email) }
+
+
+tags = ["Sports", "News", "Gossip", "Surprise!"]
+tags.each { |tag| TagTopic.create!(name: tag) }
+
+
+urls = ["espn.com", "wsj.com", "cnn.com", "tmz.com", "jacobinmag.com",
+        "appacademy.io", "reddit.com"]
+
+user = User.first
+urls.each { |url| ShortenedUrl.create_for_user_and_long_url!(user, url) }
+
+
+Tagging.create!(tag_id: 1, url_id: 1)
+Tagging.create!(tag_id: 2, url_id: 2)
+Tagging.create!(tag_id: 2, url_id: 3)
+Tagging.create!(tag_id: 3, url_id: 4)
+Tagging.create!(tag_id: 4, url_id: 5)
+Tagging.create!(tag_id: 4, url_id: 6)
+Tagging.create!(tag_id: 4, url_id: 7)
