@@ -1,0 +1,39 @@
+
+#user email section
+puts "Input your email"
+email = gets.chomp
+
+current_user = User.find_by(email: email)
+
+unless current_user
+  current_user = User.create!(email: email)
+end
+
+
+#input section
+begin
+  puts 'What do you want to do?
+  0. Create shortened URL
+  1. Visit shortened URL'
+  input = Integer(gets.chomp)
+rescue ArgumentError
+  retry
+end
+
+
+case input
+when 0
+  puts "Type in your long url"
+  long_url = gets.chomp
+  short_url = ShortenedUrl.create_for_user_and_long_url!(current_user, long_url)
+  puts "Short URL is: #{short_url.short_url}"
+when 1
+  puts "Type in the shortened URL"
+  short_url = gets.chomp
+  long_url = ShortenedUrl.find_by(short_url: short_url)
+  puts long_url.nil? ?
+    "Invalid short url." :
+    "Long URL is: #{long_url.long_url}"
+else
+  puts "Congrats, you input the wrong number."
+end
