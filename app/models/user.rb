@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  validates :email, :uniqueness => true, :presence => true
+  validates :email, :uniqueness => true, :presence => true, :length => {maximum: 1024}
 
   has_many(
   :submitted_urls,

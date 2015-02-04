@@ -4,6 +4,8 @@ class ShortenedUrl < ActiveRecord::Base
     :presence => true
 
   validates :short_url, :uniqueness => true
+  validates :long_url, :length => {maximum: 1024}
+  validate :cannot_store_more_than_five_urls_in_one_minute
 
   def self.random_code
     loop do
@@ -58,5 +60,14 @@ class ShortenedUrl < ActiveRecord::Base
     # Visit.where(
     # "url_id = :id AND updated_at > :time",
     # {id: id, time: 10.minutes.ago}).distinct.count(:visitor_id)
+  end
+
+  private
+  def cannot_store_more_than_five_urls_in_one_minute
+    count = ShortenedUrl.where('submitter_id = :id AND created_at > :time',
+    {id: submitter_id, time: 1.minute.ago} ).count
+    if count > 4
+      errors[:submitter_id] << "can't submit more than 5 urls in a min"
+    end
   end
 end

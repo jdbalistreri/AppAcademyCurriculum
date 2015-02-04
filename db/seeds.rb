@@ -15,11 +15,15 @@ tags = ["Sports", "News", "Gossip", "Surprise!"]
 tags.each { |tag| TagTopic.create!(name: tag) }
 
 
-urls = ["espn.com", "wsj.com", "cnn.com", "tmz.com", "jacobinmag.com",
+urls1 = ["espn.com", "wsj.com", "cnn.com"]
+urls2 = ["tmz.com", "jacobinmag.com",
         "appacademy.io", "reddit.com"]
 
 user = User.first
-urls.each { |url| ShortenedUrl.create_for_user_and_long_url!(user, url) }
+urls1.each { |url| ShortenedUrl.create_for_user_and_long_url!(user, url) }
+
+user = User.find_by(id: 2)
+urls2.each { |url| ShortenedUrl.create_for_user_and_long_url!(user, url) }
 
 
 Tagging.create!(tag_id: 1, url_id: 1)
