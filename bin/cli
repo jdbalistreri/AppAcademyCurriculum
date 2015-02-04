@@ -15,12 +15,14 @@ end
 begin
   puts 'What do you want to do?
   0. Create shortened URL
-  1. Visit shortened URL'
+  1. Visit shortened URL
+  2. Visit page by topic'
   input = Integer(gets.chomp)
 rescue ArgumentError
   retry
 end
 
+print "\e[H\e[2J"
 
 case input
 when 0
@@ -28,6 +30,9 @@ when 0
   long_url = gets.chomp
   short_url = ShortenedUrl.create_for_user_and_long_url!(current_user, long_url)
   puts "Short URL is: #{short_url.short_url}"
+
+
+
 when 1
   puts "Type in the shortened URL"
   short_url = gets.chomp
@@ -35,10 +40,33 @@ when 1
   if long_url.nil?
     puts "Invalid short url."
   else
-    "Long URL is: #{long_url.long_url}"
+    puts "Long URL is: #{long_url.long_url}"
     Launchy.open(long_url.long_url)
     Visit.create!(visitor_id: current_user.id, url_id: long_url.id)
   end
+
+
+
+when 2
+  topics = TagTopic.all
+  begin
+    puts "Available Topics:"
+    topics.each do |topic|
+      puts "#{topic.id}. #{topic.name.capitalize}"
+    end
+    puts "Choose your topic."
+    topic_id = Integer(gets.chomp)
+  rescue
+    retry
+  end
+
+  tag_topic = TagTopic.find_by(id: topic_id)
+  url = tag_topic.rand_url
+
+  puts "Chosen URL is: #{url.long_url}"
+  Launchy.open(url.long_url)
+  Visit.create!(visitor_id: current_user.id, url_id: url.id)
+
 else
   puts "Congrats, you input the wrong number."
 end
