@@ -3,14 +3,14 @@ class User < ActiveRecord::Base
   validates :name, presence: true
 
   has_many(
-    :authored_polls,
+    :authored_polls, dependent: :destroy,
     :class_name => 'Poll',
     :foreign_key => :author_id,
     :primary_key => :id
   )
 
   has_many(
-    :responses,
+    :responses, dependent: :destroy,
     class_name: 'Response',
     foreign_key: :respondent_id,
     primary_key: :id
@@ -53,12 +53,12 @@ class User < ActiveRecord::Base
     # polls_with_num_user_answers = Poll.select('polls.*, COUNT(questions.id) AS num_answers')
     # .joins('LEFT OUTER JOIN questions ON polls.id = questions.poll_id')
     # .group('polls.id')
-
-    Poll.select("polls.*").joins('LEFT OUTER JOIN questions ON polls.id = questions.poll_id')
-        .joins('LEFT OUTER JOIN answer_choices ON answer_choices.question_id = questions.id')
-        .joins("LEFT OUTER JOIN (#{self.responses.to_sql}) AS user_responses ON user_responses.answer_choice_id = answer_choices.id")
-        .group("polls.id")
-        .having('COUNT(DISTINCT questions.id) = COUNT(DISTINCT user_responses.id )')
+    #
+    # Poll.select("polls.*").joins('LEFT OUTER JOIN questions ON polls.id = questions.poll_id')
+    #     .joins('LEFT OUTER JOIN answer_choices ON answer_choices.question_id = questions.id')
+    #     .joins("LEFT OUTER JOIN (#{self.responses.where(user_id: 1).to_sql}) AS user_responses ON user_responses.answer_choice_id = answer_choices.id")
+    #     .group("polls.id")
+    #     .having('COUNT(DISTINCT questions.id) = COUNT(DISTINCT user_responses.id )')
 
   end
 

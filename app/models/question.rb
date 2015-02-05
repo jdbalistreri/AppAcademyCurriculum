@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-
+  after_destroy :log_destroy_action
   validates :body, :poll_id, presence: true
 
   belongs_to(
@@ -10,7 +10,7 @@ class Question < ActiveRecord::Base
   )
 
   has_many(
-    :answer_choices,
+    :answer_choices, dependent: :destroy,
     class_name: 'AnswerChoice',
     foreign_key: :question_id,
     primary_key: :id
@@ -48,5 +48,9 @@ class Question < ActiveRecord::Base
       .where('answer_choices.question_id = ?', id)
       .group('answer_choices.id')
 
+  end
+
+  def log_destroy_action
+    puts 'Question destroyed'
   end
 end
