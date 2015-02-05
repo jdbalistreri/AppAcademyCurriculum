@@ -18,6 +18,12 @@ class User < ActiveRecord::Base
 
   has_many :answered_questions, through: :responses, source: :question
 
+  def self.user_responses
+    self.
+      select
+      .join
+  end
+
   def completed_polls_sql
     Poll.find_by_sql([<<-SQL, id])
       SELECT
@@ -54,11 +60,11 @@ class User < ActiveRecord::Base
     # .joins('LEFT OUTER JOIN questions ON polls.id = questions.poll_id')
     # .group('polls.id')
     #
-    # Poll.select("polls.*").joins('LEFT OUTER JOIN questions ON polls.id = questions.poll_id')
-    #     .joins('LEFT OUTER JOIN answer_choices ON answer_choices.question_id = questions.id')
-    #     .joins("LEFT OUTER JOIN (#{self.responses.where(user_id: 1).to_sql}) AS user_responses ON user_responses.answer_choice_id = answer_choices.id")
-    #     .group("polls.id")
-    #     .having('COUNT(DISTINCT questions.id) = COUNT(DISTINCT user_responses.id )')
+    Poll.select("polls.*").joins('LEFT OUTER JOIN questions ON polls.id = questions.poll_id')
+        .joins('LEFT OUTER JOIN answer_choices ON answer_choices.question_id = questions.id')
+        .joins("LEFT OUTER JOIN (#{Response.where(respondent_id: id).to_sql}) AS user_responses ON user_responses.answer_choice_id = answer_choices.id")
+        .group("polls.id")
+        .having('COUNT(DISTINCT questions.id) = COUNT(DISTINCT user_responses.id )')
 
   end
 
