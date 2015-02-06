@@ -12,15 +12,15 @@ class SQLObject
   end
 
   def self.table_name=(table_name)
-    # ...
+    @table_name = table_name
   end
 
   def self.table_name
-    # ...
+    @table_name || self.to_s.tableize
   end
 
   def self.all
-    # ...
+    # returns an array of all the records in the DB
   end
 
   def self.parse_all(results)
@@ -28,7 +28,7 @@ class SQLObject
   end
 
   def self.find(id)
-    # ...
+    # look up a single record by a primary key
   end
 
   def initialize(params = {})
@@ -44,14 +44,14 @@ class SQLObject
   end
 
   def insert
-    # ...
+    # insert a new row into the table to represent the SQLObject
   end
 
   def update
-    # ...
+    # update the row with the id of this SQLObject
   end
 
   def save
-    # ...
+    # a convenience method calling either insert or update
   end
 end
