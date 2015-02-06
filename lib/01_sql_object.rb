@@ -18,15 +18,9 @@ class SQLObject
   end
 
   def self.finalize!
-    c = columns
-    c.each do |column_name|
-      define_method("#{column_name}") do
-        attributes[column_name]
-      end
-
-      define_method("#{column_name}=") do |value|
-        attributes[column_name] = value
-      end
+    columns.each do |name|
+      make_getter(name)
+      make_setter(name)
     end
   end
 
@@ -39,11 +33,18 @@ class SQLObject
   end
 
   def self.all
-    # returns an array of all the records in the DB
+    results = DBConnection.execute(<<-SQL)
+      SELECT
+        #{table_name}.*
+      FROM
+        #{table_name}
+    SQL
+
+    parse_all(results)
   end
 
   def self.parse_all(results)
-    # ...
+    results.map { |params| self.new(params) }
   end
 
   def self.find(id)
@@ -51,7 +52,16 @@ class SQLObject
   end
 
   def initialize(params = {})
-    # ...
+    self.class.finalize!
+
+    columns = self.class.columns
+
+    params.each do |attr_name, value|
+      attr_name = attr_name.to_sym
+      raise "unknown attribute '#{attr_name}'" unless columns.include?(attr_name)
+
+      self.send("#{attr_name}=", value)
+    end
   end
 
   def attributes
@@ -73,4 +83,17 @@ class SQLObject
   def save
     # a convenience method calling either insert or update
   end
+
+  private
+    def self.make_getter(name)
+      define_method("#{name}") do
+        attributes[name]
+      end
+    end
+
+    def self.make_setter(name)
+      define_method("#{name}=") do |value|
+        attributes[name] = value
+      end
+    end
 end
