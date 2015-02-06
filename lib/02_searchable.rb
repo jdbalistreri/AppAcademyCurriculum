@@ -3,8 +3,14 @@ require_relative '01_sql_object'
 
 module Searchable
   def where(params)
+    cols = self.columns
 
-    where_line = params.keys.map { |name| "#{name} = ?"}.join("AND ")
+    where_line = params.keys.map do |name|
+      raise "unknown attribute '#{name}'" unless cols.include?(name)
+      "#{name} = ?"
+    end
+    .join("AND ")
+
     attr_values = params.values
 
     result = DBConnection.execute(<<-SQL, *attr_values)
@@ -21,5 +27,5 @@ module Searchable
 end
 
 class SQLObject
-  extend Searchable
+  # extend Searchable
 end

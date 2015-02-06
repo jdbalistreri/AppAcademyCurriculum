@@ -1,4 +1,5 @@
 require '02_searchable'
+require '05_relation'
 
 describe 'Searchable' do
   before(:each) { DBConnection.reset }
@@ -39,6 +40,6 @@ describe 'Searchable' do
   end
 
   it '#where returns [] if nothing matches the criteria' do
-    expect(Human.where(fname: 'Nowhere', lname: 'Man')).to eq([])
+    expect(Human.where(fname: 'Nowhere', lname: 'Man').evaluate).to eq([])
   end
 end
