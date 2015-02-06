@@ -99,13 +99,13 @@ class SQLObject
   end
 
   def update
-    columns = self.class.columns.drop(1)
-    attrs = attribute_values
-    attrs << attrs.shift
+    column_names = self.class.columns.drop(1)
+    attr_values = attribute_values
+    attr_values << attr_values.shift
 
-    set_line = columns.map{ |name| "#{name} = ?" }.join(", ")
+    set_line = column_names.map{ |name| "#{name} = ?" }.join(", ")
 
-    DBConnection.execute(<<-SQL, attrs)
+    DBConnection.execute(<<-SQL, attr_values)
       UPDATE
         #{self.class.table_name}
       SET
