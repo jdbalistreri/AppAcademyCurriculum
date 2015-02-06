@@ -41,7 +41,8 @@ end
 module Associatable
   # Phase IIIb
   def belongs_to(name, options = {})
-    options = BelongsToOptions.new(name, options)
+    assoc_options.tap { |hash| hash[name] = BelongsToOptions.new(name, options)}
+    options = assoc_options[name]
 
     define_method("#{name}") do
 
@@ -87,7 +88,7 @@ module Associatable
   end
 
   def assoc_options
-    # Wait to implement this in Phase IVa. Modify `belongs_to`, too.
+    @assoc_options ||= {}
   end
 end
 
