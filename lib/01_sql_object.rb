@@ -99,11 +99,24 @@ class SQLObject
   end
 
   def update
-    # update the row with the id of this SQLObject
+    columns = self.class.columns.drop(1)
+    attrs = attribute_values
+    attrs << attrs.shift
+
+    set_line = columns.map{ |name| "#{name} = ?" }.join(", ")
+
+    DBConnection.execute(<<-SQL, attrs)
+      UPDATE
+        #{self.class.table_name}
+      SET
+        #{set_line}
+      WHERE
+        id = ?
+    SQL
   end
 
   def save
-    # a convenience method calling either insert or update
+    id.nil? ? insert : update
   end
 
   private
