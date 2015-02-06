@@ -48,7 +48,16 @@ class SQLObject
   end
 
   def self.find(id)
-    # look up a single record by a primary key
+    result = DBConnection.execute(<<-SQL, id: id)
+      SELECT
+        #{table_name}.*
+      FROM
+        #{table_name}
+      WHERE
+        id = :id
+    SQL
+
+    parse_all(result).first
   end
 
   def initialize(params = {})
