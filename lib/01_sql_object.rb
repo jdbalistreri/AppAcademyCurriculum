@@ -78,11 +78,24 @@ class SQLObject
   end
 
   def attribute_values
-    # ...
+    self.class.columns.map { |attr_name| self.send("#{attr_name}") }
   end
 
   def insert
-    # insert a new row into the table to represent the SQLObject
+    columns         = self.class.columns.drop(1)
+    question_marks  = (["?"]*columns.count).join(", ")
+    column_names    = columns.join(", ")
+
+    attrs_without_id = attribute_values.drop(1)
+
+    DBConnection.execute(<<-SQL, attrs_without_id)
+      INSERT INTO
+        #{self.class.table_name} (#{column_names})
+      VALUES
+        (#{question_marks})
+    SQL
+
+    self.send("id=", DBConnection.last_insert_row_id)
   end
 
   def update
