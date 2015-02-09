@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
 
     if user.update(user_params)
-      render json: user
+      render json: "#{user.username} has been updated"
     else
       render(
         json: user.errors.full_messages, status: :unprocessable_entity
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params[:user].permit(:username)
+      params.require(:user).permit(:username)
 
     end
 
