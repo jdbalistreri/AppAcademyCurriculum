@@ -11,6 +11,8 @@ class Cat < ActiveRecord::Base
             { in: %w(M F),
             message: "%{value} is not a valid sex"}
 
+  has_many :cat_rental_requests, :dependent => :destroy
+
   def age
     "#{time_ago_in_words(birth_date.to_datetime)} old"
   end

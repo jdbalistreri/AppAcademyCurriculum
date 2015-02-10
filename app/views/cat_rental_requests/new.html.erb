@@ -1,0 +1,23 @@
+<h1> Request a Cat Rental for <%= @cat.name %> </h1>
+
+<%= @request.errors.full_messages %>
+
+<form action="<%= cat_cat_rental_requests_url(@cat) %>" method="post">
+  <input type="hidden" name="cat_rental_request[cat_id]" value="<%= @cat.id %>">
+
+  <label for="request_start_date">Start date:</label>
+  <input  id="request_start_date"
+          type="date"
+          name="cat_rental_request[start_date]"
+          value="">
+
+  <br>
+  <label for="request_end_date">End date:</label>
+  <input  id="request_end_date"
+          type="date"
+          name="cat_rental_request[end_date]"
+          value="">
+
+  <input type="submit" value="Request cat">
+
+</form>
