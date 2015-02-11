@@ -36,6 +36,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_cat_ownership
+    fail
     flash[:notice] = "You don't own that cat"
     redirect_to cats_url unless current_user.id == params[:id].to_i
   end

@@ -1,31 +1,17 @@
 <h1> Welcome to <%= @cat.name.capitalize %>'s Page </h1>
 
 <table>
-  <tr>
-    <td>Name:</td>
-    <td><%= @cat.name %></td>
-  </tr>
+  <% [:name, :sex, :color, :age, :description].each do |action| %>
+    <tr>
+      <td><%= "#{action.capitalize}:" %></td>
+      <td><%= @cat.send(action) %></td>
+    </tr>
+  <% end %>
 
   <tr>
-    <td> Sex:</td>
-    <td> <%= @cat.sex %> </td>
+    <td>Owner:</td>
+    <td><%= @cat.send(:owner).user_name.capitalize %></td>
   </tr>
-
-  <tr>
-    <td> Color: </td>
-    <td> <%= @cat.color %> </td>
-  </tr>
-
-  <tr>
-    <td> Age: </td>
-    <td> <%= @cat.age %> </td>
-  </tr>
-
-  <tr>
-    <td> Description: </td>
-    <td> <%= @cat.description %> </td>
-  </tr>
-
 
 </table>
 
@@ -33,15 +19,6 @@
 <a href="<%= edit_cat_url(@cat) %>"> Edit this cat! </a>
 <br>
 <br>
-
-<form action="<%= cat_url(@cat) %>" method="post">
-  <input type="hidden" name="_method" value="delete">
-  <input  type="hidden"
-         name="authenticity_token"
-         value="<%= form_authenticity_token %>">
-  <button>Delete this cat!</button>
-</form>
-
 
 <br>
 <br>
@@ -52,6 +29,7 @@
 
 <table>
   <tr>
+    <td> Made By:</td>
     <td> Start Date:</td>
     <td> End Date:  </td>
     <td> Status:  </td>
@@ -59,10 +37,11 @@
 
   <% @cat.cat_rental_requests.order(:start_date).each do |request| %>
   <tr>
+      <td> <%= request.requestor.user_name.capitalize %> </td>
       <td> <%= request.start_date %> </td>
       <td> <%= request.end_date %> </td>
       <td> <%= request.status %> </td>
-      <% if request.pending? %>
+      <% if request.pending? && @cat.user_id == current_user.id %>
         <td>
           <form action="<%=cat_rental_requests_approve_url%>" method="post">
             <input  type="hidden"
@@ -90,3 +69,14 @@
     <% end %>
 
 </table>
+
+<br>
+<% if @cat.user_id == current_user.id %>
+  <form action="<%= cat_url(@cat) %>" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <input  type="hidden"
+           name="authenticity_token"
+           value="<%= form_authenticity_token %>">
+    <button>Delete this cat!</button>
+  </form>
+<% end %>

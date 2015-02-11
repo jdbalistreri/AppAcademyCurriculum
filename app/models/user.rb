@@ -11,6 +11,13 @@ class User < ActiveRecord::Base
     :class_name => 'Cat'
   )
 
+  has_many(
+    :requests,
+    :foreign_key => :user_id,
+    :primary_key => :id,
+    :class_name => 'CatRentalRequest'
+  )
+
   def self.generate_session_token
     SecureRandom::urlsafe_base64(16)
   end

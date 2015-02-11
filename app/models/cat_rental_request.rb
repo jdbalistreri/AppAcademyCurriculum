@@ -1,11 +1,18 @@
 class CatRentalRequest < ActiveRecord::Base
-  validates :cat_id, :start_date, :end_date, :status,
+  validates :cat_id, :start_date, :end_date, :status, :user_id,
             presence: true
   validates :status, inclusion:
             { in: %w(PENDING APPROVED DENIED),
               message: "Illegal status"}
   validate :no_overlapping_approved
   validate :cat_exists
+
+  belongs_to(
+    :requestor,
+    :foreign_key => :user_id,
+    :primary_key => :id,
+    :class_name => 'User'
+  )
 
   belongs_to :cat
   after_initialize :set_status

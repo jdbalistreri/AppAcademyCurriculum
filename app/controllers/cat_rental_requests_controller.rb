@@ -1,4 +1,5 @@
 class CatRentalRequestsController < ApplicationController
+  before_action :require_cat_ownership, only: [:approve, :deny]
 
   def new
     @request = CatRentalRequest.new
@@ -7,7 +8,7 @@ class CatRentalRequestsController < ApplicationController
   end
 
   def create
-    @request = CatRentalRequest.new(request_params)
+    @request = current_user.requests.new(request_params)
     @cat = Cat.find(request_params[:cat_id])
     @cats = Cat.all
 
@@ -16,10 +17,6 @@ class CatRentalRequestsController < ApplicationController
     else
       render :new
     end
-  end
-
-  def destroy
-
   end
 
   def approve
