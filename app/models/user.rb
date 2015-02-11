@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   validates :user_name, :password_digest, :session_token, presence: true
   validates :password, length: { minimum: 6, allow_nil: true }
-  validates :user_name, uniqueness: true
+  validates :user_name, uniqueness: { case_sensitive: false }
   after_initialize :ensure_session_token
 
   has_many(

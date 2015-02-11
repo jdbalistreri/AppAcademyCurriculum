@@ -26,19 +26,25 @@ class ApplicationController < ActionController::Base
   end
 
   def login_filter
-    flash[:notice] = "You don't need that page. You are already logged in"
-    redirect_to cats_url if signed_in?
+    if signed_in?
+      flash[:notice] = "You don't need that page. You are already logged in"
+      redirect_to cats_url
+    end
   end
 
   def require_login
-    flash[:notice] = "You must be logged in to do that"
-    redirect_to cats_url unless signed_in?
+    unless signed_in?
+      flash[:notice] = "You must be logged in to do that"
+      redirect_to cats_url
+    end
   end
 
   def require_cat_ownership
-    fail
-    flash[:notice] = "You don't own that cat"
-    redirect_to cats_url unless current_user.id == params[:id].to_i
+    @cat = Cat.find(params[:cat][:id])
+    unless @cat.user_id == current_user.id
+      flash[:notice] = "You don't own that cat"
+      redirect_to cats_url
+    end
   end
 
   private

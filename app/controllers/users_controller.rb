@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :login_filter, only: [:new, :create]
+  before_action :require_login, only: :show
 
   def new
     @user = User.new
@@ -16,5 +17,10 @@ class UsersController < ApplicationController
     else
       render :new
     end
+  end
+
+  def show
+
+    render :show
   end
 end

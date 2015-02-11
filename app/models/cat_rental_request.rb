@@ -1,8 +1,10 @@
 class CatRentalRequest < ActiveRecord::Base
+  STATUSES = ["PENDING", "APPROVED", "DENIED"]
+
   validates :cat_id, :start_date, :end_date, :status, :user_id,
             presence: true
   validates :status, inclusion:
-            { in: %w(PENDING APPROVED DENIED),
+            { in: STATUSES,
               message: "Illegal status"}
   validate :no_overlapping_approved
   validate :cat_exists
