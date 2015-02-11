@@ -31,8 +31,8 @@ class User < ActiveRecord::Base
     BCrypt::Password.new(super)
   end
 
-  def self.find_by_creditials(username, password)
-    user = User.find_by_username(username)
+  def self.find_by_credentials(username, password)
+    user = User.find_by_user_name(username)
     return nil if user.nil?
     user.is_password?(password) ? user : nil
   end
