@@ -3,6 +3,9 @@
 <%= @request.errors.full_messages %>
 
 <form action="<%= cat_rental_requests_url %>" method="post">
+  <input  type="hidden"
+         name="authenticity_token"
+         value="<%= form_authenticity_token %>">
 
   <label for="request_cat_name">Pick a cat: </label>
   <select id="request_cat_name" name="cat_rental_request[cat_id]">

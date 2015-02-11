@@ -36,6 +36,9 @@
 
 <form action="<%= cat_url(@cat) %>" method="post">
   <input type="hidden" name="_method" value="delete">
+  <input  type="hidden"
+         name="authenticity_token"
+         value="<%= form_authenticity_token %>">
   <button>Delete this cat!</button>
 </form>
 
@@ -62,15 +65,23 @@
       <% if request.pending? %>
         <td>
           <form action="<%=cat_rental_requests_approve_url%>" method="post">
-          <input type="hidden" name="cat_rental_request[id]" value="<%=request.id%>" >
-          <input type="hidden" name="cat[id]" value="<%=@cat.id%>" >
-          <button>Approve this request!</button>
+            <input  type="hidden"
+                   name="authenticity_token"
+                   value="<%= form_authenticity_token %>">
+
+            <input type="hidden" name="cat_rental_request[id]" value="<%=request.id%>" >
+            <input type="hidden" name="cat[id]" value="<%=@cat.id%>" >
+            <button>Approve this request!</button>
           </form>
         </td>
         <td>
           <form action="<%=cat_rental_requests_deny_url%>" method="post">
-          <input type="hidden" name="cat_rental_request[id]" value="<%=request.id%>" >
-          <input type="hidden" name="cat[id]" value="<%=@cat.id%>" >
+            <input  type="hidden"
+                   name="authenticity_token"
+                   value="<%= form_authenticity_token %>">
+
+            <input type="hidden" name="cat_rental_request[id]" value="<%=request.id%>" >
+            <input type="hidden" name="cat[id]" value="<%=@cat.id%>" >
           <button>Deny this request!</button>
           </form>
         </td>

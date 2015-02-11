@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :login_filter, only: :new  
+
   def new
     @user = User.new
     render :new
@@ -7,15 +9,19 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by_credentials(user_params['user_name'], user_params['password'])
     if @user
-      @user.reset_session_token!
-      session[:token] = @user.session_token
+      login!(@user)
 
-      flash[:notice] = "Thanks for logging in #{@user.user_name}"
+      flash[:notice] = "Thanks for logging in #{current_user.user_name}"
       redirect_to cats_url
     else
       @user = User.create(user_params)
       render :new
     end
+  end
+
+  def destroy
+    logout!
+    redirect_to new_session_url
   end
 
 end

@@ -12,3 +12,9 @@
 
 <a href="<%= new_cat_url %>">Create a cat!</a>
 <a href="<%= new_cat_rental_request_url %>">Rent a cat</a>
+<br>
+<% if !signed_in?%>
+  <a href="<%=new_session_url%>"> Login </a>
+  <br>
+  <a href="<%=new_user_url%>"> Signup </a>
+<% end %>
