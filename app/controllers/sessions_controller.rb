@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :login_filter, only: :new  
+  before_action :login_filter, only: [:new, :create]
 
   def new
     @user = User.new
