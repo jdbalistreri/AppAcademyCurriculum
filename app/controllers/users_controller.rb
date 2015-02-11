@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :login_filter, only: [:new, :create]
-  before_action :require_login, only: :show
+  before_action :require_no_user!, only: [:new, :create]
+  before_action :require_user!, only: :show
 
   def new
     @user = User.new
@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      login!(@user)
+      login_user!(@user)
       flash[:notice] = "Thanks for signing up #{@user.user_name}"
       redirect_to cats_url
     else

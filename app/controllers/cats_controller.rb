@@ -1,5 +1,5 @@
 class CatsController < ApplicationController
-  before_action :require_login, only: [:new, :create]
+  before_action :require_user!, only: [:new, :create]
   before_action :require_cat_ownership, only: [:edit, :update, :destroy]
 
   def index

@@ -1,5 +1,6 @@
 class CatRentalRequestsController < ApplicationController
   before_action :require_cat_ownership, only: [:approve, :deny]
+  before_action :require_user!, only: [:new, :create]
 
   def new
     @request = CatRentalRequest.new
