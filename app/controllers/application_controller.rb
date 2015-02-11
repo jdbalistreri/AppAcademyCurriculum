@@ -39,11 +39,14 @@ class ApplicationController < ActionController::Base
     end
 
     def require_cat_ownership
-      @cat = Cat.find(params[:cat][:id])
-      unless @cat.user_id == current_user.id
+      unless current_cat.user_id == current_user.id
         flash[:notice] = "You don't own that cat"
         redirect_to cats_url
       end
+    end
+
+    def current_cat
+      params[:cat] && params[:cat][:id] ? Cat.find(params[:cat][:id]) : Cat.find(params[:id])
     end
 
     def user_params
