@@ -1,0 +1,17 @@
+<h1>Sign up!</h1>
+
+<ul>
+<% @user.errors.full_messages.each do |msg| %>
+  <li> <%= msg %> </li>
+<% end %>
+</ul>
+
+<form action="<%=user_url%>" method="post">
+  <label for="username">Username</label>
+  <input id="username" type="text" name="user[user_name]" value="">
+  <br>
+  <label for="password">Password</label>
+  <input id="password" type="password" name="user[password]" value="">
+
+  <button>Join now!</button>
+</form>
