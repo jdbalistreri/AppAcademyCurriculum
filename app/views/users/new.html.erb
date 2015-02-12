@@ -1,0 +1,10 @@
+<h1>Sign Up!</h1>
+
+<%= render partial: "shared/errors", locals: { obj: @user } %>
+
+<form action="<%= users_url %>" method="post">
+
+  <%= render partial: "shared/login_inputs", locals: { user: @user } %>
+
+  <button>Join now!</button>
+</form>
