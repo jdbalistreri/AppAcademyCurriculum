@@ -1,0 +1,9 @@
+<% if !logged_in? %>
+  <br>
+  You are not logged in.
+  <br>
+  <a href="<%= new_session_url %>">Log in</a>
+  or
+  <a href="<%= new_user_url %>">Sign up</a>
+
+<% end %>
