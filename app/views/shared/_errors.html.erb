@@ -1,5 +1,7 @@
+<% if obj %>
 <ul>
   <% obj.errors.full_messages.each do |msg| %>
     <li><%= msg.capitalize %></li>
   <% end %>
 </ul>
+<% end %>

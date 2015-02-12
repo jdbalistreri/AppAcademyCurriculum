@@ -1,0 +1,12 @@
+<h1>Add an album!</h1>
+
+<%= render partial: "shared/errors", locals: { obj: @album } %>
+
+<%= render partial: "album_form", locals: {
+                                    url: albums_url,
+                                    action: "POST",
+                                    word: "Add",
+                                    album: @album,
+                                    band: @band,
+                                    bands: @bands
+  } %>
