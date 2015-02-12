@@ -1,4 +1,5 @@
 class BandsController < ApplicationController
+  before_action :require_user
 
   def index
     @bands = Band.all
@@ -34,7 +35,7 @@ class BandsController < ApplicationController
   def update
     @band = Band.find(params[:id])
     @band_name = @band.name
-    
+
     if @band.update(band_params)
       redirect_to band_url(@band)
     else

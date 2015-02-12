@@ -8,6 +8,14 @@ class Track < ActiveRecord::Base
   after_initialize :ensure_track_type
 
 
+  def album_name
+    album.name
+  end
+
+  def band_name
+    album.band_name
+  end
+
   private
     def ensure_track_type
       self.track_type ||= 0

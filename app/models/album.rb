@@ -8,6 +8,9 @@ class Album < ActiveRecord::Base
   enum recording_type: [:studio, :live]
   after_initialize :ensure_recording_type
 
+  def band_name
+    band.name
+  end
 
   private
     def ensure_recording_type

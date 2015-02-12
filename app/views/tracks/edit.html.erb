@@ -1,9 +1,10 @@
-<h1>Add a new track to "<%= @album.name %>"!</h1>
+<h1>Edit "<%= @track_name %>"!</h1>
 
 <%= render partial: "shared/errors", locals: {obj: @track} %>
 
-<form action="<%= tracks_url %>" method="post">
+<form action="<%= track_url(@track) %>" method="post">
   <%= auth_token %>
+  <input type="hidden" name="_method" value="PATCH">
 
   <label for="track_name"><strong>Track name:</strong></label>
   <input id="track_name" type="text" name="track[name]" value="<%= @track.name %>">

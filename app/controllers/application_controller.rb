@@ -20,6 +20,13 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by(session_token: session[:token])
   end
 
+  def require_user
+    unless logged_in?
+      redirect_to new_session_url
+      flash[:notice] = "You must be logged in to access that page."
+    end
+  end
+
   private
     def user_params
       params.require(:user).permit(:email, :password)
