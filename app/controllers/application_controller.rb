@@ -45,10 +45,6 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def current_cat
-      params[:cat] && params[:cat][:id] ? Cat.find(params[:cat][:id]) : Cat.find(params[:id])
-    end
-
     def user_params
       params.require(:user).permit(:user_name, :password)
     end

@@ -56,4 +56,7 @@ class CatsController < ApplicationController
                                 :description)
   end
 
+  def current_cat
+    Cat.find(params[:id])
+  end
 end
