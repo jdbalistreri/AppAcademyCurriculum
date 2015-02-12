@@ -31,4 +31,10 @@ module ApplicationHelper
     objs.sort_by { |obj| obj.name }
   end
 
+  def ugly_lyrics(lyrics)
+    ugly = "&#9835  " + h(lyrics).split("\n").join("\n&#9835  ")
+    ugly = ugly.gsub("\r\n&#9835  \r\n&#9835", "\r\n\r\n&#9835")
+    ugly.html_safe
+  end
+
 end

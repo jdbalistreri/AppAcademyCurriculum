@@ -1,0 +1,6 @@
+<h2>Add a note for this track!</h2>
+<form action="<%= track_notes_url(track) %>" method="post">
+  <%= auth_token %>
+  <textarea name="note[content]" rows="8" cols="40"></textarea>
+  <button >Submit!</button>
+</form>

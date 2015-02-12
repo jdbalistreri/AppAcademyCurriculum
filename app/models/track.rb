@@ -3,6 +3,8 @@ class Track < ActiveRecord::Base
 
   belongs_to :album
   has_one :band, through: :album, source: :band
+  has_many :notes
+
 
   enum track_type: [:regular, :bonus]
   after_initialize :ensure_track_type

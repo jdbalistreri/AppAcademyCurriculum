@@ -1,0 +1,5 @@
+<form action="<%=note_url(note.id)%>" method="post">
+  <%= auth_token %>
+  <input type="hidden" name="_method" value="DELETE">
+  <button>Delete note</button>
+</form>
