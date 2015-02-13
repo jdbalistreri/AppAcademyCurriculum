@@ -20,6 +20,16 @@ class User < ActiveRecord::Base
     inverse_of: :author
   )
 
+  has_many(
+    :comments,
+    class_name: "Comment",
+    foreign_key: :author_id,
+    primary_key: :id,
+    inverse_of: :author
+  )
+
+  has_many :commented_posts, through: :comments, source: :post
+
   def self.generate_session_token
     token = SecureRandom::urlsafe_base64
     generate_session_token if User.exists?(session_token: token)

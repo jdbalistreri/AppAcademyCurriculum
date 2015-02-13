@@ -6,11 +6,13 @@
 <br>
 <%= @post.content %>
 
-
 <br>
-<%= @post.author_name %>
+Post Author: <%= @post.author_name %>
+<br>
 
+<%= render 'comments/view_comments', comments: @comments %>
 
+<a href="<%= new_post_comment_url(@post) %>">Create Comment</a>
 <br>
 <%= render "edit_post", post: @post %>
 

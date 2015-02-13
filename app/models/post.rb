@@ -12,6 +12,8 @@ class Post < ActiveRecord::Base
   has_many :postings, dependent: :destroy, inverse_of: :post
   has_many :subs, through: :postings, source: :sub, inverse_of: :posts
 
+  has_many :comments, inverse_of: :post, dependent: :destroy
+  has_many :commenters, through: :comments, source: :author
 
   def author_name
     author.username

@@ -14,7 +14,8 @@ module ApplicationHelper
 
   def hidden_patch
     <<-HTML.html_safe
-      <input type="hidden" name="_method" value="patch"> 
+      <input type="hidden" name="_method" value="patch">
     HTML
   end
+
 end
