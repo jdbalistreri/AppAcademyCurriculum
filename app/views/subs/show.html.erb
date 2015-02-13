@@ -1,0 +1,7 @@
+<h1><%= @sub.title.titleize %></h1>
+
+<aside>
+  <pre><em><%= @sub.description || "no description yet" %></em></pre>
+</aside>
+
+<%= render "edit_sub", sub: @sub %>

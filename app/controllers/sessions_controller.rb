@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 
     if @user
       login!(@user)
-      render text: "hi"
+      redirect_to subs_url
     else
       flash.now[:error] = "Invalid login"
       render :new

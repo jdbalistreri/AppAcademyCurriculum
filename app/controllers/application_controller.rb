@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   def require_logged_out
     if logged_in?
       flash[:error] = "You're already logged in, silly!"
-      render text: "hi"
+      redirect_to subs_url
     end
   end
 

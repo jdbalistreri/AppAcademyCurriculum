@@ -6,7 +6,9 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
+
 <body>
+<a href="<%= subs_url %>"><h1>Kredit</h1></a>
 <%= render 'shared/login_status' %>
 <%= yield %>
 

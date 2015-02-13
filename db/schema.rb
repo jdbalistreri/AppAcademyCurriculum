@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213152534) do
+ActiveRecord::Schema.define(version: 20150213163353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "subs", force: true do |t|
+    t.string   "title",        null: false
+    t.text     "description"
+    t.integer  "moderator_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subs", ["moderator_id"], name: "index_subs_on_moderator_id", using: :btree
+  add_index "subs", ["title"], name: "index_subs_on_title", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username",        null: false

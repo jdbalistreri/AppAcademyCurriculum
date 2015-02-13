@@ -4,6 +4,14 @@ class User < ActiveRecord::Base
 
   after_initialize :ensure_session_token
 
+  has_many(
+    :subs,
+    class_name: "Sub",
+    foreign_key: :moderator_id,
+    primary_key: :id,
+    inverse_of: :moderator
+  )
+
   def self.generate_session_token
     token = SecureRandom::urlsafe_base64
     generate_session_token if User.exists?(session_token: token)
