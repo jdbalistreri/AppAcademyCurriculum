@@ -1,7 +1,6 @@
 class Post < ActiveRecord::Base
-  validates :title, :sub, :author, presence: true
-  validates :title, uniqueness: { scope: :sub_id }
-  belongs_to :sub, inverse_of: :posts
+  validates :title, :postings, :author, presence: true
+
   belongs_to(
     :author,
     class_name: "User",
@@ -9,6 +8,10 @@ class Post < ActiveRecord::Base
     primary_key: :id,
     inverse_of: :posts
   )
+
+  has_many :postings, dependent: :destroy, inverse_of: :post
+  has_many :subs, through: :postings, source: :sub, inverse_of: :posts
+
 
   def author_name
     author.username

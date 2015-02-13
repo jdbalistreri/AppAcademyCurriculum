@@ -6,16 +6,19 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to post_url(@post)
     else
+      @subs = Sub.all
       render :new
     end
   end
 
   def edit
     @post ||= Post.find(params[:id])
+    @subs = Sub.all
   end
 
   def new
     @post = Post.new
+    @subs = Sub.all
     render :new
   end
 
@@ -29,13 +32,14 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       redirect_to post_url(@post)
     else
+      @subs = Sub.all
       render :edit
     end
   end
 
   private
     def post_params
-      params.require(:post).permit(:content, :sub_id, :title, :url)
+      params.require(:post).permit(:content, :title, :url, :sub_ids => [])
     end
 
     def require_author

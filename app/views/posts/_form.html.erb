@@ -1,0 +1,48 @@
+<%= render "shared/errors", object: post %>
+
+
+
+<% if post.persisted? %>
+  <form action="<%= post_url(post) %>" method="post">
+    <%= hidden_patch %>
+
+<% else %>
+  <form action="<%= posts_url %>" method="post">
+
+<% end %>
+
+  <%= auth_token %>
+
+  <label>
+    Title
+    <input type="text" name="post[title]" value="<%= post.title %>">
+  </label>
+  <br>
+
+  <label>
+    Url
+    <input type="text" name="post[url]" value="<%= post.url %>">
+  </label>
+  <br>
+    Tags
+  <br>
+  <% subs.each do |sub| %>
+    <input
+      id="sub_id<%= sub.id %>"
+      type="checkbox"
+      name="post[sub_ids][]"
+      value=" <%= sub.id %>"
+      <%= "checked" if post.sub_ids.include?(sub.id) ||
+        (params[:sub_id] && sub.id == params[:sub_id]) %>
+    >
+    <label for="sub_id<%= sub.id %>"> <%= sub.title %> </label>
+    <br>
+  <% end %>
+
+  <label>Content
+    <textarea name="post[content]"><%= post.content %></textarea>
+  </label>
+
+  <button>submit</button>
+
+</form>

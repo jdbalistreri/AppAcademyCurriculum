@@ -1,5 +1,7 @@
 <h1> <%= @post.title %> </h1>
 
+<%= @post.subs.map { |sub| sub.title.titleize }.join(", ") %>
+<br>
 <%= @post.url %>
 <br>
 <%= @post.content %>
@@ -13,4 +15,7 @@
 <%= render "edit_post", post: @post %>
 
 <br>
-<a href="<%=sub_url(@post.sub)%>">Back to <%= @post.sub_name %> </a>
+<% @post.subs.each do |sub| %>
+  <a href="<%=sub_url(sub)%>">Back to <%= sub.title %> </a>
+  <br>
+<% end %>

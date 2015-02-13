@@ -10,7 +10,9 @@ class Sub < ActiveRecord::Base
     inverse_of: :subs
   )
 
-  has_many :posts, inverse_of: :sub
+  has_many :postings, dependent: :destroy, inverse_of: :sub
+  has_many :posts, through: :postings, source: :post, inverse_of: :subs
+
 
   def moderator_name
     moderator.username
