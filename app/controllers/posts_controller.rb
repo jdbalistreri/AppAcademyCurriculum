@@ -24,7 +24,8 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-    @comments = @post.comments.where(parent_id: nil)
+    # @comments = @post.top_level_comments
+    @all_comments = @post.comments
   end
 
   def update
