@@ -10,6 +10,8 @@ class Sub < ActiveRecord::Base
     inverse_of: :subs
   )
 
+  has_many :posts, inverse_of: :sub
+
   def moderator_name
     moderator.username
   end

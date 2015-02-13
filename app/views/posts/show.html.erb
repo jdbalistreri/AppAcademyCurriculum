@@ -1,0 +1,16 @@
+<h1> <%= @post.title %> </h1>
+
+<%= @post.url %>
+<br>
+<%= @post.content %>
+
+
+<br>
+<%= @post.author_name %>
+
+
+<br>
+<%= render "edit_post", post: @post %>
+
+<br>
+<a href="<%=sub_url(@post.sub)%>">Back to <%= @post.sub_name %> </a>

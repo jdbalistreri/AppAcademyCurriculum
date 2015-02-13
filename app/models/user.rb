@@ -12,6 +12,14 @@ class User < ActiveRecord::Base
     inverse_of: :moderator
   )
 
+  has_many(
+    :posts,
+    class_name: "Post",
+    foreign_key: :author_id,
+    primary_key: :id,
+    inverse_of: :author
+  )
+
   def self.generate_session_token
     token = SecureRandom::urlsafe_base64
     generate_session_token if User.exists?(session_token: token)
