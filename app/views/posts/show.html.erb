@@ -11,7 +11,7 @@ Post Author: <%= @post.author_name %>
 <br>
 <h3>Comments</h3>
 
-<%= render 'comments/view_comments', comments: @all_comments, parent_id: nil %>
+<%= render 'comments/view_comments', hashed_comments: @all_comments, parent_id: nil %>
 
 <a href="<%= new_post_comment_url(@post) %>">Create Comment</a>
 <br>

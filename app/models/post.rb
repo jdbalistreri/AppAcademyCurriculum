@@ -30,5 +30,17 @@ class Post < ActiveRecord::Base
   def top_level_comments
     self.comments.where(parent_id: nil)
   end
-  
+
+  def comments_by_parent_id
+    comments = self.comments.includes(:author)
+
+    hashed_comments = Hash.new { |h, k| h[k] = []}
+
+    comments.each do |comment|
+      hashed_comments[comment.parent_id] << comment
+    end
+
+    hashed_comments
+  end
+
 end

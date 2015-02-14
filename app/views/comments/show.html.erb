@@ -5,7 +5,7 @@
 
 <%= render 'comment_form', parent: @comment, comment: Comment.new, post: @comment.post %>
 
-<%= render 'view_comments', comments: @all_comments, parent_id: @comment.id %>
+<%= render 'view_comments', hashed_comments: @all_comments, parent_id: @comment.id %>
 
 
 <% if @comment.parent %>
