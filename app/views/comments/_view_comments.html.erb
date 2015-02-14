@@ -2,13 +2,13 @@
 
 <ul>
 <% comments.each do |comment| %>
-  <% next unless comment.id == parent_id %>
+  <% next unless comment.parent_id == parent_id %>
   <li>
     <a href="<%=comment_url(comment) %>">
       <%= comment.content %> ( <%= comment.author_name %> )
       <%= render 'comments/view_comments',
-        comments: comment.child_comments,
-        parent: comment.id
+        comments: comments,
+        parent_id: comment.id
       %>
     </a>
   </li>

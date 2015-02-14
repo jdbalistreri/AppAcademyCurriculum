@@ -24,8 +24,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-    # @comments = @post.top_level_comments
-    @all_comments = @post.comments
+    @all_comments = @post.comments.includes(:author)
   end
 
   def update

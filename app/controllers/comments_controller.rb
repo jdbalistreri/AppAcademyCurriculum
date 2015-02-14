@@ -19,6 +19,8 @@ class CommentsController < ApplicationController
 
   def show
     @comment = Comment.find(params[:id])
+    @post = @comment.post
+    @all_comments = @post.comments.includes(:author)
   end
 
   private
