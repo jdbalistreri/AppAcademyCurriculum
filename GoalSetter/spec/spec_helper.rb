@@ -35,3 +35,7 @@ def log_in(username, password)
   fill_in('password', with: password)
   click_button('Submit')
 end
+
+def log_out()
+  click_button('Log Out')
+end
