@@ -39,3 +39,11 @@ end
 def log_out()
   click_button('Log Out')
 end
+
+def create_goal(public)
+  visit new_goal_url
+  fill_in('Title', with: "Mow the lawn")
+  fill_in('Description', with: "The grass is really tall.")
+  public ? check('Public') : check('Private')
+  click_button('Submit')
+end
