@@ -1,4 +1,6 @@
 class Goal < ActiveRecord::Base
+  include Commentable
+  
   validates :title, :description, :user, :privacy, presence: true
   enum privacy: [ :open, :closed ]
 

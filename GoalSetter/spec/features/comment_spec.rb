@@ -32,13 +32,13 @@ feature 'can comment on goals' do
 
   scenario 'users show page has a comment form' do
     click_link("kittykat")
-    click_link("Mow the grass")
+    click_link("Mow the lawn")
     expect(page).to have_content("New Comment")
   end
 
   scenario 'users show page has a comment form' do
     click_link("kittykat")
-    click_link("Mow the grass")
+    click_link("Mow the lawn")
     fill_in("Comment", with: "my precious kitty")
     click_button('New Comment')
     expect(page).to have_content('my precious kitty')
