@@ -1,10 +1,11 @@
 class User < ActiveRecord::Base
   include Commentable
 
-  validates :username, :password_digest, :session_token, presence: true
+  validates :username, :password_digest, :cheer_count, :session_token, presence: true
   validates :password, length: {minimum: 6, allow_nil: true}
-  after_initialize :ensure_session_token
+  after_initialize :ensure_session_token, :ensure_cheer_count
 
+  has_many :cheers, inverse_of: :user
   has_many :goals, inverse_of: :user
 
   has_many :authored_comments,
@@ -43,5 +44,20 @@ class User < ActiveRecord::Base
   def reset_session_token!
     self.update(session_token: self.class.generate_session_token)
     self.session_token
+  end
+
+  def ensure_cheer_count
+    self.cheer_count ||= 10
+  end
+
+  def give_cheer(goal)
+    if self.cheer_count <= 0
+      errors[:base] << "You have no more cheer to give! Buy more cheer."
+    elsif self.cheers.where(goal_id: goal.id).exists?
+      errors[:base] << "You can't cheer something twice. Buy more cheer."
+    else
+      self.cheer_count -= 1
+      self.cheers.new(goal_id: goal.id).save!
+    end
   end
 end

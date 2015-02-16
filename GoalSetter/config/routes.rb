@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
-  resources :users, only: [:new, :create, :index, :show]
+  resources :users, only: [:new, :create, :index, :show] 
 
-  resources :goals
+  resources :goals do
+    member do
+      post "cheer"
+    end
+  end
 
   resources :comments, only: [:create]
 

@@ -12,6 +12,14 @@
   </form>
 <% end %>
 
+<h4><%= @cheer_count %> total cheers</h4>
+<% if current_user.cheer_count > 0 && @user_cheers == 0 %>
+  <form class="" action=" <%= cheer_goal_url(@goal) %>" method="post">
+    <%= auth_token %>
+    <button>CHEER</button>
+  </form>
+<% end %>
+
 <% if current_user.id == @goal.user_id %>
 
   <a href=" <%= edit_goal_url(@goal) %>">Edit Goal</a>

@@ -3,6 +3,12 @@ class GoalsController < ApplicationController
   before_action :require_owns_goal, only: [:edit, :update, :destroy]
   before_action :require_owns_private_goal, only: :show
 
+  def cheer
+    @goal = Goal.find(params[:id])
+    current_user.give_cheer(@goal)
+    redirect_to goal_url(@goal)
+  end
+
   def create
     @goal = current_user.goals.new(goal_params)
     if @goal.save
@@ -35,7 +41,9 @@ class GoalsController < ApplicationController
   end
 
   def show
-    @goal = Goal.find(params[:id])
+    @goal = Goal.where(id: params[:id]).includes(:cheers).first
+    @cheer_count = @goal.cheers.count
+    @user_cheers = @goal.cheers.where(user_id: current_user.id).count
     render :show
   end
 
