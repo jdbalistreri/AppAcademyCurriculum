@@ -68,7 +68,7 @@ feature 'update goals' do
     log_out
     sign_up('mrchucklez', 'password')
     goal = Goal.first
-    click_link('kittycat')
+    click_link('kittykat')
     click_link('Mow the lawn')
     expect(page).not_to have_content("Edit Goal")
     visit(edit_goal_url(goal.id))
@@ -95,8 +95,7 @@ feature 'delete goals' do
   scenario 'cannot delete another user goal' do
     log_out
     sign_up('mrchucklez', 'password')
-    goal = Goal.first
-    click_link('kittycat')
+    click_link('kittykat')
     click_link('Mow the lawn')
     expect(page).not_to have_content("Delete Goal")
   end
@@ -104,5 +103,29 @@ feature 'delete goals' do
   scenario "user can delete their goals" do
     click_button('Delete Goal')
     expect(page).not_to have_content("Mow the lawn")
+  end
+end
+
+feature 'goal completion' do
+  before :each do
+    sign_up("kittykat", "password")
+    create_goal(true)
+  end
+
+  scenario 'goals are created as incomplete' do
+    expect(page).to have_content("Incomplete")
+  end
+
+  scenario 'user can complete their goals' do
+    click_button("Goal Achieved")
+    expect(page).to have_content("Complete")
+  end
+
+  scenario 'cannot complete another user goal' do
+    log_out
+    sign_up('mrchucklez', 'password')
+    click_link('kittykat')
+    click_link('Mow the lawn')
+    expect(page).not_to have_content("Complete Goal")
   end
 end

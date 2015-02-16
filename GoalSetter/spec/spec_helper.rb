@@ -40,18 +40,18 @@ def log_out()
   click_button('Log Out')
 end
 
-def create_goal(public)
+def create_goal(is_open)
   visit new_goal_url
   fill_in('Title', with: "Mow the lawn")
   fill_in('Description', with: "The grass is really tall.")
-  public ? check('Public') : check('Private')
+  is_open ? choose('Public') : choose('Private')
   click_button('Submit')
 end
 
-def edit_goal(public)
+def edit_goal(is_open)
   click_link("Edit Goal")
   fill_in('Title', with: "Cut the grass")
   fill_in('Description', with: "With a pair of scissors.")
-  public ? check('Public') : check('Private')
+  is_open ? choose('Public') : choose('Private')
   click_button('Submit')
 end

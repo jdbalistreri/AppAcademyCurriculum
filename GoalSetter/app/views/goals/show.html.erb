@@ -1,7 +1,16 @@
 <h2><%= @goal.title %></h2>
 
 <h4><%= @goal.description %></h4>
-
+<h4><%= @goal.privacy  %> goal </h4>
+<h5> <%= @goal.complete ? "Complete" : "Incomplete" %></h5>
+<% if !@goal.complete && current_user.id == @goal.user_id %>
+  <form class="" action=" <%= goal_url(@goal) %> " method="post">
+    <%= auth_token %>
+    <input type="hidden" name="_method" value="PATCH">
+    <input type="hidden" name="goal[complete]" value="true">
+    <button name="button">Goal Achieved</button>
+  </form>
+<% end %>
 
 <% if current_user.id == @goal.user_id %>
 

@@ -35,7 +35,8 @@ class ApplicationController < ActionController::Base
   end
 
   def require_owns_private_goal
-    unless current_user.id == Goal.find(params[:id]).user_id && goal.closed?
+    goal = Goal.find(params[:id])
+    if current_user.id != goal.user_id && goal.closed?
       flash[:errors] = ["You cannot see private goals"]
       redirect_to users_url
     end

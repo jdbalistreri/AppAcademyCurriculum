@@ -14,13 +14,13 @@ class GoalsController < ApplicationController
   end
 
   def destroy
-    @goal = Goal.find(params[:id])
+    @goal = current_user.goals.find(params[:id])
     @goal.destroy
     redirect_to user_url(@goal.user)
   end
 
   def edit
-    @goal = Goal.find(params[:id])
+    @goal = current_user.goals.find(params[:id])
     render :edit
   end
 
@@ -40,7 +40,7 @@ class GoalsController < ApplicationController
   end
 
   def update
-    @goal = Goal.find(params[:id])
+    @goal = current_user.goals.find(params[:id])
     if @goal.update(goal_params)
       redirect_to goal_url(@goal)
     else
@@ -52,6 +52,8 @@ class GoalsController < ApplicationController
   private
 
     def goal_params
-      params.require(:goal).permit(:title, :description, :privacy)
+      output = params.require(:goal).permit(:title, :description, :privacy, :complete)
+      output[:complete] = output[:complete] == "true"
+      output
     end
 end
