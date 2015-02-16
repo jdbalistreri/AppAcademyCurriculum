@@ -1,1 +1,14 @@
 <%= @user.username %>
+
+<h3>Goals</h3>
+
+<ul>
+  <% @user.goals.each do |goal| %>
+    <li><a href="<%= goal_url(goal) %>"><%=goal.title%></a></li>
+  <% end %>
+</ul>
+
+
+<br>
+
+<a href=" <%= new_goal_url %>">New Goal</a>
