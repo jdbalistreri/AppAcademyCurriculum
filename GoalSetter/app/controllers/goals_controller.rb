@@ -1,6 +1,7 @@
 class GoalsController < ApplicationController
-
   before_action :require_logged_in
+  before_action :require_owns_goal, only: [:edit, :update, :destroy]
+  before_action :require_owns_private_goal, only: :show
 
   def create
     @goal = current_user.goals.new(goal_params)
@@ -24,7 +25,7 @@ class GoalsController < ApplicationController
   end
 
   def index
-    @goals = Goal.all
+    @goals = Goal.all.includes(:user)
     render :index
   end
 

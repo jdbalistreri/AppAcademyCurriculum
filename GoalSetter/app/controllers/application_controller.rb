@@ -26,4 +26,18 @@ class ApplicationController < ActionController::Base
   def require_logged_in
     redirect_to new_session_url unless logged_in?
   end
+
+  def require_owns_goal
+    unless current_user.id == Goal.find(params[:id]).user_id
+      flash[:errors] = ["Cannot edit another user's goals"]
+      redirect_to users_url
+    end
+  end
+
+  def require_owns_private_goal
+    unless current_user.id == Goal.find(params[:id]).user_id && goal.closed?
+      flash[:errors] = ["You cannot see private goals"]
+      redirect_to users_url
+    end
+  end
 end

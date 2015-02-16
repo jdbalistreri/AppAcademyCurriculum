@@ -47,5 +47,7 @@ feature "logging out" do
     sign_up("kitty_kat", "password")
     log_out
     expect(page).not_to have_content "kitty_kat"
+    expect(page).to have_content "Log In"
   end
+
 end

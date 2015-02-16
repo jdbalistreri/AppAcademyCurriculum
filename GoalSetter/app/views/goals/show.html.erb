@@ -2,4 +2,19 @@
 
 <h4><%= @goal.description %></h4>
 
+
+<% if current_user.id == @goal.user_id %>
+
+  <a href=" <%= edit_goal_url(@goal) %>">Edit Goal</a>
+
+  <form class="" action=" <%= goal_url(@goal) %> " method="post">
+    <%= auth_token %>
+    <input type="hidden" name="_method" value="DELETE">
+    <button name="button">Delete Goal</button>
+
+  </form>
+
+<% end %>
+
+<br><br>
 <a href=" <%= user_url(@goal.user) %>">Back to user</a>
