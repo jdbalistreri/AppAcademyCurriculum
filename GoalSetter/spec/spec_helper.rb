@@ -47,3 +47,11 @@ def create_goal(public)
   public ? check('Public') : check('Private')
   click_button('Submit')
 end
+
+def edit_goal(public)
+  click_link("Edit Goal")
+  fill_in('Title', with: "Cut the grass")
+  fill_in('Description', with: "With a pair of scissors.")
+  public ? check('Public') : check('Private')
+  click_button('Submit')
+end
