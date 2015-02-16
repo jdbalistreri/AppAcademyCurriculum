@@ -13,7 +13,7 @@ feature "the signup process" do
     scenario "shows username on the homepage after signup" do
       sign_up("kitty_cat", "password")
       expect(page).to have_content "kitty_cat"
-      expect(page).to have_content "Goals"
+      expect(page).to have_content "Users"
     end
   end
 end

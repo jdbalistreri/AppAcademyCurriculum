@@ -24,15 +24,15 @@ end
 
 def sign_up(username, password)
   visit new_user_url
-  fill_in('username', with: username)
-  fill_in('password', with: password)
+  fill_in('Username', with: username)
+  fill_in('Password', with: password)
   click_button('Submit')
 end
 
 def log_in(username, password)
   visit new_session_url
-  fill_in('username', with: username)
-  fill_in('password', with: password)
+  fill_in('Username', with: username)
+  fill_in('Password', with: password)
   click_button('Submit')
 end
 
