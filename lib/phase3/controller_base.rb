@@ -8,6 +8,17 @@ module Phase3
     # use ERB and binding to evaluate templates
     # pass the rendered html to render_content
     def render(template_name)
+      raise if already_built_response?
+
+      folder_name = self.class.to_s.underscore
+      template = ERB.new(
+        File.read(
+          "views/#{folder_name}/#{template_name}.html.erb")
+      )
+      res.content_type = "text/html"
+      res.body = template.result(binding)
+
+      @already_built_response = true
     end
   end
 end
