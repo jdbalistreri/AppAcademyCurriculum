@@ -30,6 +30,7 @@ module Phase2
       res.content_type = content_type
       res.body = content
       @already_built_response = true
+      p "called render content 2!"
     end
   end
 end

@@ -11,6 +11,7 @@ module Phase4
     def render_content(content, content_type)
       super
       self.session.store_session(res)
+      p "called render content 4!"
     end
 
     # method exposing a `Session` object

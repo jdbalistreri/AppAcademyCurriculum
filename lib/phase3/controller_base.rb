@@ -15,10 +15,7 @@ module Phase3
         File.read(
           "views/#{folder_name}/#{template_name}.html.erb")
       )
-      res.content_type = "text/html"
-      res.body = template.result(binding)
-
-      @already_built_response = true
+      render_content(template.result(binding),"text/html")
     end
   end
 end
