@@ -25,8 +25,8 @@ Array.prototype.uniq = function() {
 Array.prototype.twoSum = function() {
   var output = [];
 
-  for(i in this) {
-    for(j in this) {
+  for(var i in this) {
+    for(var j in this) {
       if( (i < j) && (this[i] + this[j] === 0) ) {
         output.push([i,j]);
       }
