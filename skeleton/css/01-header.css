@@ -10,6 +10,7 @@ body {
 .header {
   background: #f00;
   border-bottom: 1px solid #ccc;
+  color: white;
 }
 
 .header-nav {
@@ -21,7 +22,6 @@ body {
 
 .header a {
   display: block;
-  color: white;
   padding: 10px 20px;
 }
 
