@@ -6,6 +6,8 @@
   background: #fff;
   border: 1px solid #ccc;
   border-top: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
   font-size: 14px;
   color: #aaa;
   padding: 20px;

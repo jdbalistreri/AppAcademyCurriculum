@@ -11,7 +11,7 @@
 .content-header > h1 {
   line-height: 1;
   position: absolute;
-  color: white;
+  color: #fff;
   font-size: 36px;
   font-weight: 300;
   bottom: 20px;
@@ -31,5 +31,5 @@
 }
 
 .content-header > button:hover {
-
+  background: #eee;
 }

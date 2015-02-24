@@ -37,13 +37,13 @@
 
 .profile-nav > li {
   border-top: 1px solid #ccc;
-  padding: 5px;
 }
 
 .profile-nav > li > a {
+  padding: 5px;
   display: block;
 }
 
-* {
-  /*border: 1px solid blue !important;*/
+.profile-nav > li > a:hover {
+  background: #eee;
 }
