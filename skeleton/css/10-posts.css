@@ -1,1 +1,51 @@
 /* PHASE 10: Posts */
+
+.post {
+  float: left;
+  padding: 20px 0;
+  border-top: 1px solid #ccc;
+}
+
+.post-body {
+  display: block;
+  float: right;
+  margin-left: 20px;
+  width: 540px;
+}
+
+.post-body > h1 {
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.post-body > p {
+  margin: 20px 0;
+}
+
+.post-footer {
+
+}
+
+.post-info {
+  float: left;
+}
+
+.post-info > li {
+  float: left;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.post-info > li:not(:last-child):after {
+  content: "·";
+  margin: 0 5px;
+}
+
+.post-links {
+  float: right;
+}
+
+.post-links > li {
+  float: left;
+  margin-left: 10px;
+}

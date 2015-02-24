@@ -7,10 +7,11 @@
   border-radius: 5px;
   border: 1px solid #ccc;
   padding: 0 19px;
+  margin-bottom:20px;
 }
 
 .input {
-  
+
 }
 
 .input > label {
