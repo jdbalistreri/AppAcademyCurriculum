@@ -1,5 +1,5 @@
 /* PHASE 3: Layout */
-.container {
+.content {
   width: 900px;
   margin: 0 auto;
   background: #fff;
@@ -8,20 +8,17 @@
   position: relative;
 }
 
-.container > * {
+.content-main {
+  width: 640px;
   padding: 20px 10px;
   float: left;
   min-height: 200px;
 }
 
-.container-main {
-  width: 640px;
-}
-
-.container-main:before {
+.content-main:before {
   position: absolute;
   width: 1px;
-  top: 0;
+  top: 200px;
   bottom: 0;
   display: block;
   content: "";
@@ -30,6 +27,9 @@
 }
 
 
-.container-sidebar {
+.content-sidebar {
   width: 220px;
+  padding: 20px 10px;
+  float: left;
+  min-height: 200px;
 }

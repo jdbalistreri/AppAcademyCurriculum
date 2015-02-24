@@ -1,1 +1,35 @@
 /* PHASE 5: Cats */
+.content-header {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  background-image: url(/Users/appacademy/Desktop/cssfriends/shared/img/cats.jpg);
+  background-size: cover;
+  border-bottom: 1px solid #ccc;
+}
+
+.content-header > h1 {
+  line-height: 1;
+  position: absolute;
+  color: white;
+  font-size: 36px;
+  font-weight: 300;
+  bottom: 20px;
+  left: 240px;
+  text-shadow: #000 0px 0px 10px;
+}
+
+.content-header > button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.content-header > button:hover {
+
+}
