@@ -9,9 +9,9 @@
 }
 
 .content-main {
-  width: 640px;
-  padding: 20px 10px;
-  float: left;
+  width: 620px;
+  padding: 20px;
+  float: right;
   min-height: 200px;
 }
 
@@ -28,8 +28,8 @@
 
 
 .content-sidebar {
-  width: 220px;
-  padding: 20px 10px;
+  width: 200px;
+  padding: 20px;
   float: left;
   min-height: 200px;
 }
