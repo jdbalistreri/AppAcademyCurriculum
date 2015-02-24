@@ -5,12 +5,9 @@
 }
 
 .thumbs > li {
-  float: left;
-  width: 58px;
-  border: 1px solid #000;
-  border-radius: 5px;
-  margin-bottom: 10px;
   position: relative;
+  margin-bottom: 10px;
+  float: left;
 }
 
 .thumbs > li:nth-child(3n + 2) {
@@ -19,7 +16,12 @@
 }
 
 .thumb {
-
+  position: relative;
+  float: left;
+  display:block;
+  width: 58px;
+  border: 1px solid #000;
+  border-radius: 5px;
 }
 
 .thumb > img {
