@@ -4,7 +4,8 @@
     window.Snake = {};
   }
 
-  Snake.Snake = function(){
+  Snake.Snake = function(board){
+    this.board = board;
     this.prevDir = "W";
     this.nextDir = "W";
     this.segments = Snake.buildSnake();
@@ -24,6 +25,8 @@
     this.segments.pop();
     this.segments.unshift(this.segments[0].nextCoord(this.nextDir));
     this.prevDir = this.nextDir;
+
+    this.checkPos(this.segments[0].pos);
   }
 
   Snake.Snake.prototype.turn = function(dir) {
@@ -31,6 +34,13 @@
       return;
     }
     this.nextDir = dir;
+  }
+
+  Snake.Snake.prototype.checkPos = function (pos) {
+    if ((pos[0] >= this.board.DIM_Y) || (pos[0] < 0) ||
+      (pos[1] >= this.board.DIM_X) || (pos[1] < 0))
+
+    this.board.reset();
   }
 
   var DIRS = {"N": [-1, 0], "E": [0, 1], "W": [0, -1], "S": [1, 0]}
@@ -54,7 +64,9 @@
 
 
   Snake.Board = function(){
-    this.snake = new Snake.Snake();
+    this.snake = new Snake.Snake(this);
+    this.DIM_X = 10;
+    this.DIM_Y = 10;
   };
 
   Snake.Board.prototype.render = function(){
@@ -76,5 +88,11 @@
       return el.join(" ")
     }).join("\n");
   };
+
+  Snake.Board.prototype.reset = function() {
+    this.snake = new Snake.Snake(this);
+  };
+
+
 
 })();
