@@ -1,0 +1,92 @@
+/* RESET */
+
+body, ul, li, h1{
+  margin: 0;
+  padding: 0;
+  border: none;
+  text-decoration: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+  background: transparent;
+}
+
+ul{
+  list-style: none;
+}
+
+/* CLEARFIX */
+
+.group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/* TOWERS */
+
+.hanoi-game {
+
+}
+
+.towers {
+  /*z-index: -3;*/
+}
+
+.tower {
+  position: relative;
+  height: 300px;
+  width: 300px;
+  background: transparent;
+  float: left;
+  display: block;
+  cursor: pointer;
+  padding-top: 50px;
+}
+
+.tower:hover {
+  background: lightyellow;
+}
+
+.tower.clicked {
+  background: lightgreen;
+}
+
+.tower:before{
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 50%;
+  background: black;
+  width: 50px;
+  transform: translateX(50%);
+}
+
+.disc {
+  position: relative;
+  display: block;
+  margin: 20px auto;
+  height: 60px;
+}
+
+.disc-size-1 {
+  width: 100px;
+  background: blue;
+
+}
+
+.disc-size-2 {
+  width: 150px;
+  background: gray;
+}
+
+.disc-size-3 {
+  background:red;
+  width: 200px;
+}
+
+.hanoi-text {
+
+}
