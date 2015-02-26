@@ -1,0 +1,42 @@
+/* RESET */
+/*body, ul, li, p, h2, a {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  text-decoration: inherit;
+  color: inherit;
+  background: transparent;
+}*/
+
+.tabs {
+
+}
+
+.tabs > li > a {
+
+}
+
+.tabs > li > .active {
+  font-weight: 700;
+}
+
+.tab-pane {
+  list-style: none;
+  display: none;
+  transition: opacity .5s;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+.tab-pane.transitioning {
+  opacity: 0;
+  display: block;
+}
+
+.tab-pane > li > p{
+
+}
