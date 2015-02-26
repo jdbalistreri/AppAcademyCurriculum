@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Carousel</title>
+    <script src="../js/jquery-1.11.2.js"></script>
+    <script src="../js/carousel.js"></script>
+    <link href="../css/carousel.css" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+
+    <section class="carousel">
+      <!-- <figure> -->
+        <ul class="items group">
+          <li><img src="http://placekitten.com/g/300/300"/></li>
+          <li><img src="http://placekitten.com/g/400/500"/></li>
+          <li><img src="http://placekitten.com/g/200/500"/></li>
+          <li><img src="http://placekitten.com/g/700/300"/></li>
+          <li><img src="http://placekitten.com/g/600/500"/></li>
+          <li><img src="http://placekitten.com/g/900/500"/></li>
+        </ul>
+      <!-- </figure> -->
+
+      <a href="javascript:void(0)" class="slide-left">Prev</a>
+      <a href="javascript:void(0)" class="slide-right">Next</a>
+    </section>
+
+    <script>
+      $(function() {
+        $('.carousel').carousel();
+      })
+    </script>
+
+  </body>
+</html>
