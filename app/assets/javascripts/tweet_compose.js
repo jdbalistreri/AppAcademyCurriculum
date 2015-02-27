@@ -19,7 +19,7 @@
     }
 
     this.$el.find(".chars-left").text(text);
-  }
+  };
 
   $.TweetCompose.prototype.handleSubmit = function (event) {
     event.preventDefault();
@@ -29,7 +29,7 @@
       dataType: "json",
       data: $(event.currentTarget).serialize(),
       success: this.handleSuccess.bind(this),
-      failure: this.toggleDisable(false)
+      error: this.toggleDisable.bind(this, false)
     })
     this.toggleDisable(true);
   };
@@ -47,9 +47,13 @@
 
   $.TweetCompose.prototype.renderTweet = function (response) {
     var $ul = $(this.$el.data("tweets-ul"));
-    var $tweet = $("<li>").append(response.content).append(" -- ");
-    var $link = makeLink(response);
-    $tweet.append($link).append(" -- ").append(response.created_at);
+
+    var $tweet = $("<li>");
+    $tweet.append(response.content)
+      .append(" -- ")
+      .append(makeLink(response))
+      .append(" -- ")
+      .append(response.created_at);
 
     var $mentioned = $("<ul>")
 
@@ -57,8 +61,7 @@
       $mentioned.append($("<li>").append(makeLink(mention)));
     });
 
-    $tweet.append($mentioned);
-    $ul.prepend($tweet);
+    $ul.prepend($tweet.append($mentioned));
   }
 
   var makeLink = function (response) {
@@ -67,7 +70,7 @@
 
   $.TweetCompose.prototype.clearInput = function(){
     this.$el.find("textarea").val("");
-    this.$el.find("select").prop('selectedIndex', 0);
+    this.$el.find("select").val("");
   }
 
   $.fn.tweetCompose = function () {
