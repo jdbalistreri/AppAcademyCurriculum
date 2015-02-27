@@ -4,6 +4,7 @@
     this.$carousel = $(el)
     this.activeIndex = 1;
     this.itemCount = this.$carousel.find(".items > li").length;
+    this.transitioning = false;
   };
 
   $.Carousel.prototype.bindEvents = function () {
@@ -12,10 +13,13 @@
     carousel.slide(0);
 
     carousel.$carousel.on("click", "a", function (event) {
+      if (carousel.transitioning) {
+        return;
+      }
       if (event.currentTarget.classList[0] === "slide-left") {
-        carousel.slide(-1)
+        carousel.slide(-1);
       } else {
-        carousel.slide(1)
+        carousel.slide(1);
       }
 
     } );
@@ -36,6 +40,8 @@
 
 
   $.Carousel.prototype.slide = function (num) {
+    var carousel = this;
+    this.transitioning = true;
     var active = this.$carousel.find(".items > li.active");
     active.removeClass("active right left");
 
@@ -50,6 +56,7 @@
     this.$carousel.find(findRight).addClass("active right");
 
     // alert("you slid " + num)
+    setTimeout(function() { carousel.transitioning = false; }, 500);
 
   }
 
