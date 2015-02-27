@@ -5,9 +5,18 @@
   };
 
   $.TweetCompose.prototype.bindEvents = function () {
-    this.$el.on("submit", this.handleSubmit.bind(this))
-    this.$el.on("input", "textarea", this.charsLeft.bind(this))
+    this.$el.on("submit", this.handleSubmit.bind(this));
+    this.$el.on("input", "textarea", this.charsLeft.bind(this));
+    this.$el.on("click", "a.add-mentioned-user", this.addMentionedUser.bind(this));
   };
+
+  $.TweetCompose.prototype.addMentionedUser = function (event) {
+    this.$el.find(".mentioned-users")
+      .append(
+        $("<li>")
+        .append(this.$el.find("script").html())
+      );
+  }
 
   $.TweetCompose.prototype.charsLeft = function (event){
     var charsLeft = 140 - event.currentTarget.value.length;
@@ -29,7 +38,7 @@
       dataType: "json",
       data: $(event.currentTarget).serialize(),
       success: this.handleSuccess.bind(this),
-      error: this.toggleDisable.bind(this, false)
+      error: this.handleError.bind(this)
     })
     this.toggleDisable(true);
   };
@@ -43,6 +52,15 @@
     this.toggleDisable(false);
 
     this.renderTweet(response);
+    this.$el.find(".mentioned-users").empty();
+    this.$el.find(".chars-left").text("");
+
+  }
+
+  $.TweetCompose.prototype.handleError = function () {
+    this.toggleDisable.bind(false);
+    this.$el.find(".mentioned-users").empty();
+    this.$el.find(".chars-left").text("");
   }
 
   $.TweetCompose.prototype.renderTweet = function (response) {
