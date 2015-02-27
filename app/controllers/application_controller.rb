@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     return nil if self.session[:session_token].nil?
     User.find_by(session_token: self.session[:session_token])
   end
-  helper_method :current_user
+  helper_method :current_user, :follow_status
 
   def log_in!(user)
     # force other clients to log out by regenerating token
@@ -27,5 +27,9 @@ class ApplicationController < ActionController::Base
 
   def require_not_logged_in!
     redirect_to feed_url unless current_user.nil?
+  end
+
+  def follow_status(user)
+    current_user.followees.include?(user)
   end
 end
