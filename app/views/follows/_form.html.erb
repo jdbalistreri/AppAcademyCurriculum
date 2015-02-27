@@ -7,3 +7,11 @@
 <button class="follow-toggle" data-user-id="<%= user.id %>"
   data-initial-follow-state="<%=(follow_status(user) ? "followed"
   : "unfollowed")%>"></button>
+
+
+
+<script charset="utf-8">
+  $(function () {
+    $("button.follow-toggle").followToggle();
+  });
+</script>
