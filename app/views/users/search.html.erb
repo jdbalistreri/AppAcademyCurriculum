@@ -1,6 +1,6 @@
 <h1>Search!</h1>
 
-<form action="/users/search" method="GET">
+<!-- <form action="/users/search" method="GET">
   <input
     type="text"
     name="query"
@@ -16,4 +16,15 @@
       <%= render "follows/form", user: user %>
     </li>
   <% end %>
-</ul>
+</ul> -->
+
+<section class="users-search">
+  <input type="text"></input>
+  <ul class="users"></ul>
+</section>
+
+<script>
+  $(function () {
+    $("section.users-search").usersSearch();
+  });
+</script>
