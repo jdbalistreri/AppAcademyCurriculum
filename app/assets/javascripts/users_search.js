@@ -1,28 +1,20 @@
 (function (){
   $.UsersSearch = function (el) {
     this.$el = $(el);
-    this.$input = $(this.$el.find("input"));
-    this.$ul = $(this.$el.find(".users"));
-    this.handleInput();
+    this.$input = this.$el.find("input");
+    this.$ul = this.$el.find(".users");
+    this.$input.on("input", this.handleInput.bind(this))
   };
 
-  $.UsersSearch.prototype.handleInput = function () {
-    var that = this;
-
-    this.$input.on("input", function (event) {
-      that.searchRequest(event.currentTarget.value);
-    })
-  }
-
-  $.UsersSearch.prototype.searchRequest = function (searchValue) {
-    var that = this;
+  $.UsersSearch.prototype.handleInput = function (event) {
+    var searchValue = event.currentTarget.value;
 
     $.ajax({
       url: "/users/search",
       type: "get",
       data: {query: searchValue},
       dataType: "json",
-      success: that.handleResults.bind(that),
+      success: this.handleResults.bind(this),
       failure: function () {
         alert("this failed")
       },
@@ -37,7 +29,7 @@
       var $button = $("<button>").addClass("follow-toggle");
 
       $button.followToggle({userId: user.id, followState: user.followed});
-      
+
       $li.append($button);
       that.$ul.append($li);
     })

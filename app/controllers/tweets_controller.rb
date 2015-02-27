@@ -7,6 +7,7 @@ class TweetsController < ApplicationController
 
     @tweet = current_user.tweets.build(tweet_params)
 
+
     if @tweet.save
       respond_to do |format|
         format.html { redirect_to request.referrer }
