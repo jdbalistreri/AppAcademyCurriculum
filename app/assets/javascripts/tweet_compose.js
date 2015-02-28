@@ -8,7 +8,12 @@
     this.$el.on("submit", this.handleSubmit.bind(this));
     this.$el.on("input", "textarea", this.charsLeft.bind(this));
     this.$el.on("click", "a.add-mentioned-user", this.addMentionedUser.bind(this));
+    this.$el.on("click", "a.remove-mentioned-user", this.removeMentionedUser.bind(this));
   };
+
+  $.TweetCompose.prototype.removeMentionedUser = function (event) {
+    event.currentTarget.parentElement.remove();
+  }
 
   $.TweetCompose.prototype.addMentionedUser = function (event) {
     this.$el.find(".mentioned-users")
