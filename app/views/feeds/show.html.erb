@@ -1,10 +1,17 @@
 <h1>Welcome <%= current_user.username %>!</h1>
 
 <b>Your Feed!</b>
-<ul id="feed">
-  <% @feed_tweets.each do |tweet| %>
-    <li><%= render "tweets/tweet", tweet: tweet %></li>
-  <% end %>
-</ul>
+<section class="infinite-tweets">
+  <a class="fetch-more" href="javascript:void(0)">Fetch more!</a>
+  <ul id="feed">
+    <!-- <% @feed_tweets.each do |tweet| %>
+      <li><%= render "tweets/tweet", tweet: tweet %></li>
+    <% end %> -->
+  </ul>
+</section>
+
+<script charset="utf-8">
+  $(".infinite-tweets").infiniteTweets();
+</script>
 
 <%= render "tweets/form" %>
