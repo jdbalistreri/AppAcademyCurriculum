@@ -2,11 +2,17 @@
 
 <b>Your Feed!</b>
 <section class="infinite-tweets">
+
+  <script type="text/template">
+    <%% tweets.forEach(function (tweet) { %>
+      <li><%%= JSON.stringify(tweet) %></li>
+      <%% debugger  %>
+    <%% }); %>
+  </script>
+
   <a class="fetch-more" href="javascript:void(0)">Fetch more!</a>
   <ul id="feed">
-    <!-- <% @feed_tweets.each do |tweet| %>
-      <li><%= render "tweets/tweet", tweet: tweet %></li>
-    <% end %> -->
+
   </ul>
 </section>
 

@@ -9,8 +9,15 @@
 
   $.InfiniteTweets.prototype.bindEvents = function () {
     this.$el.on("click", "a.fetch-more", this.fetchTweets.bind(this))
+    this.$el.on("insert-tweet", "#feed", this.insertTweet.bind(this))
   }
 
+
+  // $.InfiniteTweets.prototype.insertTweet = function (event) {
+  //   debugger
+  //   event.currentTarget
+  //   $tweet = arguments[1];
+  // }
 
   $.InfiniteTweets.prototype.fetchTweets = function () {
 
@@ -37,6 +44,8 @@
     response.forEach(function (tweet) {
       $feed.append($("<li>").text(JSON.stringify(tweet)));
     })
+    // _.template(this.$el.find("script").text())({tweets: response})
+
 
     this.maxCreatedAt = response[response.length - 1].created_at;
 

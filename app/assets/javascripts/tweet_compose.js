@@ -56,14 +56,17 @@
     this.clearInput();
     this.toggleDisable(false);
 
-    this.renderTweet(response);
+    // this.renderTweet(response);
+
+    $("#feed").trigger("insert-tweet", [response])
+
     this.$el.find(".mentioned-users").empty();
     this.$el.find(".chars-left").text("");
 
   }
 
   $.TweetCompose.prototype.handleError = function () {
-    this.toggleDisable.bind(false);
+    this.toggleDisable(false);
     this.$el.find(".mentioned-users").empty();
     this.$el.find(".chars-left").text("");
   }
