@@ -1,5 +1,6 @@
 Pokedex.RootView.prototype.renderPokemonDetail = function (pokemon) {
-  var $detail = $("<div>").addClass("detail");
+  var that = this;
+  var $detail = $("<div>").addClass("detail").data('pokemon-id', pokemon.id);
   $detail.append($("<img>").attr("src", pokemon.get("image_url")));
 
   var $table = $("<table>");
@@ -12,6 +13,15 @@ Pokedex.RootView.prototype.renderPokemonDetail = function (pokemon) {
   })
 
   $detail.append($table);
+  $detail.append($('<ul>').addClass('toys'));
+
+  pokemon.fetch({
+    success: function (data) {
+      data.toys().forEach( function (toy) {
+        that.addToyToList(toy);
+      })
+    }
+  });
 
   this.$pokeDetail.html($detail);
 };

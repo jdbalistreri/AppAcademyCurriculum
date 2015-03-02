@@ -56,13 +56,15 @@ window.Pokedex.RootView = function ($el) {
   this.$pokeDetail = this.$el.find('.pokemon-detail');
   this.$newPoke = this.$el.find('.new-pokemon');
   this.$toyDetail = this.$el.find('.toy-detail');
+  // this.toys = new Pokedex.Collections.PokemonToys();
 
   this.$pokeList.on('click', 'li.poke-list-item', this.selectPokemonFromList.bind(this));
+  this.$pokeDetail.on('click', '.toy-item', this.selectToyFromList.bind(this));
   this.$newPoke.on('submit', this.submitPokemonForm.bind(this));
 };
 
 $(function() {
   var $rootEl = $('#pokedex');
 	window.Pokedex.rootView = new Pokedex.RootView($rootEl);
-  window.Pokedex.rootView.refreshPokemon();
+  window.Pokedex.rootView.Pokemon();
 });
