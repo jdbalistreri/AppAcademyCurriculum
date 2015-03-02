@@ -3,24 +3,54 @@ Pokedex.RootView.prototype.renderPokemonDetail = function (pokemon) {
   var $detail = $("<div>").addClass("detail").data('pokemon-id', pokemon.id);
   $detail.append($("<img>").attr("src", pokemon.get("image_url")));
 
-  var $table = $("<table>");
+  // var $table = $("<table>");
+  //
+  // ["name", "poke_type", "attack", "defense", "moves"].forEach(function (attr) {
+  //   var $tr = $('<tr>');
+  //   $tr.append($('<td>').text(attr));
+  //   $tr.append($('<td>').text(pokemon.get(attr)));
+  //   $table.append($tr);
+  // })
+  //
+  // $detail.append($table);
 
-  ["name", "poke_type", "attack", "defense", "moves"].forEach(function (attr) {
-    var $tr = $('<tr>');
-    $tr.append($('<td>').text(attr));
-    $tr.append($('<td>').text(pokemon.get(attr)));
-    $table.append($tr);
-  })
+// ATTEMPT 2
+  // $detail.append("<br>")
+  // var $form = $("<form>").addClass('poke-update');
+  //
+  // ["name", "poke_type", "attack", "defense", "moves"].forEach(function (attr) {
+  //   var $input = $('<input>');
+  //   var $label = $('<label>').text(attr);
+  //   $input.attr({
+  //     type: "text",
+  //     name: "pokemon[" + attr + "]",
+  //     value: pokemon.escape(attr)
+  //   });
+  //   $form.append($label.append($input)).append("<br>");
+  // })
+  //
+  // var $hidden = $('<input>').attr({
+  //   type: 'hidden',
+  //   name: 'pokemon[id]',
+  //   value: pokemon.escape('id')
+  // })
+  //
+  // $form.append($hidden);
+  // $form.append($('<button>').text('Update'));
 
-  $detail.append($table);
+  var $form = (this.$el.find("script").html());
+
+
+
+  $detail.append($form);
+
+
   $detail.append($('<ul>').addClass('toys'));
 
   pokemon.fetch({
     success: function (data) {
-      data.toys().forEach( function (toy) {
-        that.addToyToList(toy);
-      })
-    }
+      this.renderToysList(data.toys())
+    }.bind(this)
   });
 
   this.$pokeDetail.html($detail);

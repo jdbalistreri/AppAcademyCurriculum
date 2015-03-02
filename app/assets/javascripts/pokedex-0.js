@@ -64,6 +64,8 @@ window.Pokedex.RootView = function ($el) {
   this.$pokeDetail.on('click', '.toy-item', this.selectToyFromList.bind(this));
   this.$newPoke.on('submit', this.submitPokemonForm.bind(this));
   this.$toyDetail.on('input', 'select', this.reassignToy.bind(this));
+  this.$pokeDetail.on('submit', '.poke-update', this.updatePoke.bind(this))
+
 };
 
 $(function() {

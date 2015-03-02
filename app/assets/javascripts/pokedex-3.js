@@ -8,9 +8,26 @@ Pokedex.RootView.prototype.reassignToy = function (event) {
   toy.save({}, {
     success: function(){
       oldPoke.toys().remove(toy);
-      this.renderPokemonDetail(oldPoke);
+      this.renderToysList(oldPoke.toys());
       this.$toyDetail.empty();
     }.bind(this)
   })
 
 };
+
+Pokedex.RootView.prototype.renderToysList = function (toys) {
+  this.$pokeDetail.find(".toys").empty();
+  toys.forEach (function (toy) {
+    this.addToyToList(toy);
+  }.bind(this))
+}
+
+Pokedex.RootView.prototype.updatePoke = function (event){
+  event.preventDefault();
+  var attrs = $(event.currentTarget).serializeJSON();
+  var updatedPoke = this.pokes.get(attrs["pokemon"]["id"]);
+  updatedPoke.save(attrs["pokemon"], {
+    success: function(){ alert('success!')}
+  })
+
+}

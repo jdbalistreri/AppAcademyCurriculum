@@ -89,6 +89,17 @@ body {
   display:block;
 }
 
+form {
+  display: block;
+  float: left;
+  margin: 20px 0px
+}
+
+ul {
+  float: left;
+}
+
+
 .new-pokemon button {
   padding: 5px;
   border: 0;
