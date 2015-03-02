@@ -18,7 +18,9 @@ Pokedex.Models.Pokemon = Backbone.Model.extend({
   }
 });
 
-Pokedex.Models.Toy = Backbone.Model.extend();
+Pokedex.Models.Toy = Backbone.Model.extend({
+  urlRoot: "/toys"
+});
 
 Pokedex.Collections.Pokemon = Backbone.Collection.extend( {
   url: "/pokemon",
@@ -26,7 +28,8 @@ Pokedex.Collections.Pokemon = Backbone.Collection.extend( {
 })
 
 Pokedex.Collections.PokemonToys = Backbone.Collection.extend( {
-  model: Pokedex.Models.Toy
+  model: Pokedex.Models.Toy,
+  url: "/toys"
 });
 
 window.Pokedex.Test = {
@@ -56,15 +59,15 @@ window.Pokedex.RootView = function ($el) {
   this.$pokeDetail = this.$el.find('.pokemon-detail');
   this.$newPoke = this.$el.find('.new-pokemon');
   this.$toyDetail = this.$el.find('.toy-detail');
-  // this.toys = new Pokedex.Collections.PokemonToys();
 
   this.$pokeList.on('click', 'li.poke-list-item', this.selectPokemonFromList.bind(this));
   this.$pokeDetail.on('click', '.toy-item', this.selectToyFromList.bind(this));
   this.$newPoke.on('submit', this.submitPokemonForm.bind(this));
+  this.$toyDetail.on('input', 'select', this.reassignToy.bind(this));
 };
 
 $(function() {
   var $rootEl = $('#pokedex');
 	window.Pokedex.rootView = new Pokedex.RootView($rootEl);
-  window.Pokedex.rootView.Pokemon();
+  window.Pokedex.rootView.refreshPokemon();
 });

@@ -1,8 +1,8 @@
 Pokedex.RootView.prototype.addToyToList = function (toy) {
-  $toy = $("<li>").addClass("toy-item").data("toy-id", toy.id)
-  $toy.append("Name: " + toy.escape("name") + "\n")
-  $toy.append("Happiness: " + toy.escape("happiness") + "\n")
-  $toy.append("Price: " + toy.escape("price") + "\n")
+  var $toy = $("<li>").addClass("toy-item").data("toy-id", toy.id);
+  $toy.append("Name: " + toy.escape("name") + "\n");
+  $toy.append("Happiness: " + toy.escape("happiness") + "\n");
+  $toy.append("Price: " + toy.escape("price") + "\n");
 
   this.$pokeDetail.find(".detail > ul.toys").append($toy)
 };
@@ -23,12 +23,25 @@ Pokedex.RootView.prototype.renderToyDetail = function (toy) {
 
   $detail.append($table);
 
+  var $select = $('<select>').data('pokemon-id', toy.get('pokemon_id')).data('toy-id', toy.get('id'))
+  this.pokes.forEach(function(poke){
+    var $opt = $('<option>').attr({name: 'toy[pokemon_id]', value: poke.id}).text(poke.get('name'));
+    if (toy.get('pokemon_id') === poke.get("id")) {
+      $opt.attr("selected", "selected");
+    }
+    $select.append($opt);
+  })
+
+
+  $detail.append($select);
+
   this.$toyDetail.html($detail);
 };
 
 Pokedex.RootView.prototype.selectToyFromList = function (event) {
-  var toys = (this.pokes.get($(event.delegateTarget.children[0]).data('pokemon-id'))).toys();
-  var toy = toys.get($(event.currentTarget).data('toy-id'));
+
+  var poke = (this.pokes.get($(event.delegateTarget.children[0]).data('pokemon-id')));
+  var toy = poke.toys().get($(event.currentTarget).data('toy-id'));
 
   this.renderToyDetail(toy);
 };
