@@ -1,9 +1,7 @@
 Pokedex.RootView.prototype.createPokemon = function (attrs, callback) {
   var that = this;
-  var poke = new Pokedex.Models.Pokemon(attrs);
-  poke.save({}, {
+  pokes.create(attrs, {
     success: function (data) {
-      that.pokes.add(data);
       that.addPokemonToList(data);
       callback(data);
     },

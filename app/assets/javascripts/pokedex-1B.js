@@ -18,6 +18,6 @@ Pokedex.RootView.prototype.renderPokemonDetail = function (pokemon) {
 
 Pokedex.RootView.prototype.selectPokemonFromList = function (event) {
   var id = $(event.currentTarget).data('id');
-  var poke = this.pokes.findWhere({id: id});
+  var poke = this.pokes.get(id);
   this.renderPokemonDetail(poke);
 };
