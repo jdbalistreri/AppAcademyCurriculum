@@ -45,18 +45,20 @@
       <%% } %>
     <%% }%>
 
-    <select data-pokemon-id="<%%= toy.escape("pokemon_id") %>"
-      data-toy-id="<%%= toy.id %>" >
-      <%% pokes.each(function (pokemon) { %>
-        <option value="<%%=pokemon.id %>"
-          <%% if (pokemon.id === toy.get("pokemon_id")) { %>
-            <%%= "selected" %>
-          <%% } %>>
+    <%% if (pokes.length !== 0) { %>
+      <select data-pokemon-id="<%%= toy.escape("pokemon_id") %>"
+        data-toy-id="<%%= toy.id %>" >
+        <%% pokes.each(function (pokemon) { %>
+          <option value="<%%=pokemon.id %>"
+            <%% if (pokemon.id === toy.get("pokemon_id")) { %>
+              <%%= "selected" %>
+            <%% } %>>
 
-            <%%= pokemon.escape("name") %>
-        </option>
-      <%% }) %>
-    </select>
+              <%%= pokemon.escape("name") %>
+          </option>
+        <%% }) %>
+      </select>
+    <%% }  %>
   </div>
 
 </script>
