@@ -8,19 +8,39 @@ JournalApp.Routers.PostsRouter = Backbone.Router.extend({
 
   routes: {
     "" : "index",
+    "posts/new" : "new",
     "posts/:id" : "show"
   },
 
   index: function () {
     this._indexView = new JournalApp.Views.PostsIndex({collection: this.collection});
-    this.$el.html(this._indexView.render().$el);
+    this._swapView(this._indexView);
+
+  },
+
+  new: function () {
+    var newPost = new JournalApp.Models.Post();
+    this._newView = new JournalApp.Views.PostForm({
+      model: newPost,
+      collection: this.collection
+    });
+    this._swapView(this._newView);
   },
 
   show: function(id) {
     var post = this.collection.getOrFetch(id);
 
     this._showView = new JournalApp.Views.PostShow({model: post});
-    this.$el.html(this._showView.render().$el);
+    this._swapView(this._showView);
+  },
+
+  _swapView: function (newView) {
+    if (this._currentView) {
+      this._currentView.remove();
+    }
+
+    this.$el.html(newView.render().$el);
+    this._currentView = newView;
   }
 
 })
