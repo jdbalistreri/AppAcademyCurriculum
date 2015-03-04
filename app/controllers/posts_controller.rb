@@ -10,6 +10,12 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    @post = Post.find(params[:id])
+    @post.destroy!
+    render json: @post
+  end
+
   def index
     @posts = Post.all
     render json: @posts
