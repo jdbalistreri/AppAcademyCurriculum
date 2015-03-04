@@ -1,5 +1,9 @@
-<h1><%= post.escape("title") %></h1>
-<p>
+<h2 class="post-title"><%= post.escape("title") %></h2>
+<input class="edit-title hidden" name="post[title]" value="<%= post.escape("title") %>">
+<pre>
+<p class="post-body">
 <%= post.escape("body") %>
 </p>
+</pre>
+<textarea class="edit-body hidden" name="post[body]" rows="8" cols="40"><%= post.escape("body") %></textarea>
 <br>

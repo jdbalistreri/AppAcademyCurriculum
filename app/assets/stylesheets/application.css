@@ -14,27 +14,106 @@
  *= require_self
  */
 
- .router {
+ /*RESET*/
 
-
+ ul, h1, li, main, section, h2, a, p, body {
+   background: transparent;
+   margin: 0;
+   padding: 0;
+   border: 0;
+   font-size: inherit;
+   font-family: inherit;
+   font-weight: inherit;
+   text-decoration: inherit;
+   color: inherit;
+   text-align: inherit;
  }
+
+ .group:after {
+   content: "";
+   display: block;
+   clear: both;
+ }
+
+ /*SECTIONS*/
+
+ body {
+   font-family: sans-serif;
+   font-weight: 400;
+   text-align: left;
+ }
+
+ h1 {
+   font-size: 36px;
+   font-weight: 700;
+   padding: 30px;
+   background: lightgrey;
+   border-bottom: 1px solid grey;
+   text-align: center;
+ }
+
+ h2 {
+   font-size: 24px;
+   padding: 20px;
+ }
+
+ ul {
+   list-style: none;
+ }
+
+main {
+  margin: auto;
+  width: 800px;
+  height: 500px;
+  background: lightblue;
+}
+
+p {
+  padding: 20px;
+}
+
+li {
+  padding: 10px;
+}
+
+a {
+  margin-left: 10px;
+  background: grey;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+a:hover {
+  color: purple;
+  background: white;
+}
+
+.post-form {
+  margin: 0px 20px 20px 20px;
+}
 
  .sidebar {
    display: block;
    float: left;
-   width: 30%;
-
+   width: 300px;
+   background: lightgreen;
+   height: inherit;
+   overflow: scroll;
  }
+
+
+
+.hidden {
+  display:none;
+}
+
+
 
  .content {
    display: block;
-   float: left;
-   width: 70%;
+   float: right;
+   width: 500px;
+   height: inherit;
+   overflow: scroll;
+   
  }
-
-
-.group:after {
-  content: "";
-  display: block;
-  clear: both;
-}
