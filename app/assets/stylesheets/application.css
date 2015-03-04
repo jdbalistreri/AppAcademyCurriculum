@@ -13,3 +13,28 @@
  *= require_tree .
  *= require_self
  */
+
+ .router {
+
+
+ }
+
+ .sidebar {
+   display: block;
+   float: left;
+   width: 30%;
+
+ }
+
+ .content {
+   display: block;
+   float: left;
+   width: 70%;
+ }
+
+
+.group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
