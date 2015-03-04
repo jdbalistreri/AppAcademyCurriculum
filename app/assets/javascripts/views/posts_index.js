@@ -1,8 +1,14 @@
 JournalApp.Views.PostsIndex = Backbone.View.extend({
 
   initialize: function (options) {
-    this.collection = options.collection;
-    this.listenTo(this.collection, "remove sync", this.render)
+    this.collection = new JournalApp.Collections.Posts();
+    this.collection.fetch({
+      success: function(){
+        options.success && options.success();
+      }
+    });
+
+    this.listenTo(this.collection, "remove sync", this.render);
   },
 
   template: JST['posts_index'],
@@ -40,6 +46,18 @@ JournalApp.Views.PostIndexItem = Backbone.View.extend({
 
   handleDelete: function () {
     this.model.destroy();
+  }
+
+})
+
+JournalApp.Views.PostShow = Backbone.View.extend({
+
+  template: JST['post_show'],
+
+  render: function () {
+    var content = this.template({post: this.model});
+    this.$el.html(content);
+    return this;
   }
 
 })

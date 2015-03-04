@@ -10,4 +10,6 @@ window.JournalApp = {
 
 $(document).ready(function(){
   JournalApp.initialize();
+  var router = new JournalApp.Routers.PostsRouter({el: $(".router")});
+  Backbone.history.start();
 });
