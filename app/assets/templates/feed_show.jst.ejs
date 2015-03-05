@@ -1,0 +1,18 @@
+<h2>Feed!</h2>
+
+<%= feed.escape("title")%>
+
+<br>
+
+<%= feed.escape("url")%>
+
+<br>
+
+<h3>Entries</h3>
+<ul>
+  <% feed.entries().forEach(function (entry) { %>
+
+    <li><%= entry.escape('title') %></li>
+
+  <%  }) %>
+</ul>
