@@ -1,0 +1,6 @@
+require_relative 'database'
+require_relative 'user'
+require_relative 'question'
+require_relative 'questionfollower'
+require_relative 'reply'
+require_relative 'questionlike'
