@@ -1,0 +1,18 @@
+<header>
+  <h4 class="trigger"><a class="list-title" href="javascript:void(0)"><%= list.escape("title") %></a></h4>
+  <a href="javascript:void(0)" class="delete delete-list"> X </a>
+  <form class="hidden-input new-list">
+    <input type="text" name="list[title]" value="<%= list.escape("title") %>">
+    <button>Submit</button>
+  </form>
+</header>
+
+
+<section class="hidden-input">
+  <ul class="cards">
+  </ul>
+
+
+
+  <a href="javascript:void(0)" class="edit-list">Edit List Name</a>
+</section>

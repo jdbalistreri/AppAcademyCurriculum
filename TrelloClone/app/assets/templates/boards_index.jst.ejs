@@ -1,0 +1,11 @@
+<h3>My Boards</h3>
+
+<ul class="board-index group">
+  <% boards.forEach(function (board) { %>
+    <li>
+      <a href="#/boards/<%= board.id %>"><%= board.escape("title") %></a>
+    </li>
+  <% }) %>
+</ul>
+
+<br>

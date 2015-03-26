@@ -1,0 +1,190 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require jquery.ui.all
+ *= require_tree .
+ */
+
+@import "bootstrap";
+@import "font-awesome";
+
+.group:after {
+  content: "";
+  clear: both;
+  display: block;
+  box-sizing: none;
+}
+
+ul {
+  padding: none;
+  margin: none;
+  border: none;
+  -webkit-padding-start: 0px;
+  list-style: none;
+}
+
+.board-index {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.board-index > * {
+  background: #0B6294;
+  width: 200px;
+  height: 100px;
+  float: left;
+  margin: 20px;
+  border-radius: 2px;
+}
+
+.board-index a {
+  display: block;
+  height: 100%;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+}
+
+.board-index a:hover {
+  background: #0A5783;
+}
+
+a.new-board {
+  background: lightgrey;
+  display: block;
+}
+
+.board-index a.new-board:hover {
+  background: #bbbbbb;
+}
+
+.toggled > .trigger, .hidden-input {
+  display: none;
+}
+
+.trigger, .toggled > .hidden-input {
+  display: block;
+}
+
+ul.lists {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  min-height: 500px;
+}
+
+.lists > li {
+  float: left;
+  display: block;
+  background: lightgrey;
+  width: 240px;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 2px;
+}
+
+h4 {
+  text-align: center;
+}
+
+li.list > h4 > a {
+  display: block;
+}
+
+#main {
+  background: #0B6294;
+}
+
+#main.index {
+  background: white;
+}
+
+.cards > .card {
+  float: left;
+  width: 200px;
+  background: #dddddd;
+  border: 1px solid #aaaaaa;
+  display: block;
+  margin: 5px;
+}
+
+.cards > .sortable-placeholder-card {
+  float: left;
+  width: 200px;
+  height: 65px;
+  display: block;
+  margin: 5px;
+  background: black;
+}
+
+.modal-background {
+  z-index: 999;
+  background: rgba(0,0,0,.45);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.modal-background > .card-show {
+  background: yellow;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  height: 200px;
+  width: 200px;
+  opacity: 1;
+}
+
+
+.board-title {
+  display: block;
+}
+
+.board-title > h3 {
+  display: inline;
+}
+
+.delete {
+  color: white;
+  background: red;
+  font-weight: 700;
+  display: none;
+}
+
+.edit-board {
+  display: none;
+}
+
+.list:hover .delete {
+  display: block;
+  float: right;
+}
+
+.list h4 {
+  display: inline;
+  text-align: center;
+}
+
+.board-title:hover .delete-board, .board-title:hover .edit-board {
+  display: inline;
+}
+
+
+.cards > .card.dragged {
+  transform: rotate(2deg);
+  background: lightblue;
+}

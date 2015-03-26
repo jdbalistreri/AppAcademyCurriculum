@@ -1,0 +1,14 @@
+<h4<%= card.escape("title") %></h4>
+
+<p>
+  <%= card.escape("description") %>
+</p>
+
+<form class="hidden-input">
+  <input type="text" name="card[title]" value="<%= card.escape("title") %>">
+  <textarea name="card[description]"> <%= card.escape("description") %></textarea>
+  <button>Submit</button>
+</form>
+
+<a href="javascript:void(0)" class="edit-card">Edit</a>
+<button class="delete-card">Delete Card</button>
