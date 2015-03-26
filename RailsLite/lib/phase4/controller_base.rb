@@ -1,0 +1,22 @@
+require_relative '../phase3/controller_base'
+require_relative './session'
+
+module Phase4
+  class ControllerBase < Phase3::ControllerBase
+    def redirect_to(url)
+      super
+      self.session.store_session(res)
+    end
+
+    def render_content(content, content_type)
+      super
+      self.session.store_session(res)
+      p "called render content 4!"
+    end
+
+    # method exposing a `Session` object
+    def session
+      @session ||= Session.new(req)
+    end
+  end
+end
