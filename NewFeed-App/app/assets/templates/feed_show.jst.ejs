@@ -1,0 +1,25 @@
+<h2>Feed!</h2>
+
+Title: <%= feed.escape("title")%>
+
+<br>
+
+URL: <%= feed.escape("url")%>
+
+<br>
+
+<br>
+
+
+<h3>Entries</h3>
+<ul>
+  <% feed.entries().forEach(function (entry) { %>
+
+    <li><%= entry.escape('title') %></li>
+
+  <%  }) %>
+</ul>
+
+<button name="button">Refresh</button>
+
+<br>
