@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NinetyNineCats</title>
+  <!-- <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %> -->
+</head>
+<body>
+
+<%= flash[:notice] %>
+<%= "You are logged in as #{current_user.user_name}" if logged_in? %>
+<% if logged_in? %>
+  <form action="<%=session_url%>" method="post">
+    <input type="hidden"
+           name="authenticity_token"
+           value="<%= form_authenticity_token %>">
+
+    <input type="hidden" name="_method" value="delete">
+    <button> Logout </button>
+  </form>
+<% end %>
+
+
+<%= yield %>
+
+
+</body>
+</html>

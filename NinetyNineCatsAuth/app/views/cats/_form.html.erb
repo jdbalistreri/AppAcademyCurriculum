@@ -1,0 +1,53 @@
+<% title = cat.persisted? ? "Update" : "Create" %>
+<% url = cat.persisted? ? cat_url(cat) : cats_url %>
+<% action = cat.persisted? ? "Put" : "Post" %>
+
+<h1> <%=title%> your cat!</h1>
+<%= cat.errors.full_messages %>
+<form action="<%= url %>" method="post">
+  <input type="hidden"
+         name="_method"
+         value="<%= action %>">
+
+  <input  type="hidden"
+         name="authenticity_token"
+         value="<%= form_authenticity_token %>">
+
+  <label for="cat_name"> name: </label>
+  <input id="cat_name"
+        type="text"
+        name="cat[name]"
+        value="<%= cat.name %>">
+  <br>
+  <label for="cat_sex"> Sex: </label>
+  <select id="cat_sex"
+        name="cat[sex]">
+    <option value="M" <%= "selected" if cat.sex == "M" %> >Male</option>
+    <option value="F" <%= "selected" if cat.sex == "F" %>>Female</option>
+  </select>
+  <br>
+
+  <label for="cat_color">Color: </label>
+  <select id="cat_color" name="cat[color]">
+    <% %w(black grey yellow brown).each do |color| %>
+      <option value="<%= color %>"
+              <%= "selected" if cat.color == color %>>
+              <%= color.capitalize %></option>
+    <% end %>
+  </select>
+  <br>
+
+  <label for="cat_birth_date">Birth Date:</label>
+  <input  id="cat_birth_date"
+          type="date"
+          name="cat[birth_date]"
+          value="<%= cat.birth_date %>" >
+  <br>
+
+  <label for="cat_description">Description:</label>
+  <textarea   id="cat_description"
+              name="cat[description]"> <%= cat.description %> </textarea>
+  <br>
+
+  <input type="submit" value="<%= title.downcase %> cat">
+</form>

@@ -1,0 +1,17 @@
+<h1> <%= current_user.user_name.capitalize %>'s Page</h1>
+
+<h2>Cats</h2>
+
+<ul>
+  <% current_user.cats.each do |cat| %>
+    <li><a href="<%= cat_url(cat) %>"> <%= cat.name %></a></li>
+  <% end %>
+</ul>
+
+<h2>Rental Requests</h2>
+
+<ul>
+  <% current_user.requests.each do |request| %>
+    <li><a href="<%= cat_url(request.cat) %>"> <%= request.cat.name %></a></li>
+  <% end %>
+</ul>

@@ -1,0 +1,16 @@
+<h1> <%= @cat.name %>'s Rental Requests </h1>
+
+<table>
+  <tr>
+    <td> Start Date:</td>
+    <td> End Date:  </td>
+  </tr>
+
+  <% @cat.cat_rental_requests.each do |request| %>
+  <tr>
+      <td> <%= request.start_date %> </td>
+      <td> <%= request.end_date %> </td>
+  </tr>
+    <% end %>
+
+</table>
