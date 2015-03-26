@@ -1,0 +1,16 @@
+
+<% comments = hashed_comments[parent_id] %>
+
+<ul>
+<% comments.each do |comment| %>
+  <li>
+    <a href="<%=comment_url(comment) %>">
+      <%= comment.content %> ( <%= comment.author_name %> )
+      <%= render 'comments/view_comments',
+        hashed_comments: hashed_comments,
+        parent_id: comment.id
+      %>
+    </a>
+  </li>
+<% end %>
+</ul>
