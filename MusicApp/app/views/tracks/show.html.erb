@@ -1,0 +1,37 @@
+
+<h1> <%= @track.name %> </h1>
+
+<strong>Band:</strong> <%= @track.band_name %>
+<br>
+
+<strong>Album:</strong> <%= @track.album_name %>
+<br>
+
+<strong>Track type:</strong>
+<%= @track.track_type.capitalize %>
+
+<br>
+<strong>Lyrics:</strong>
+<br>
+<pre>
+<%= ugly_lyrics(@track.lyrics) %>
+</pre>
+
+<br>
+<br>
+
+<a href="<%= edit_track_url %>">Edit track</a>
+<br>
+
+<form action="<%= track_url(@track) %>" method="post">
+  <%= auth_token %>
+  <input type="hidden" name="_method" value="DELETE">
+  <button>Delete track</button>
+</form>
+<%= render partial: "notes/note", locals: {track: @track} %>
+<%= render partial: "notes/form", locals: {track: @track} %>
+
+<br>
+<br>
+
+<a href="<%= album_url(@track.album) %>" >Back to album</a>

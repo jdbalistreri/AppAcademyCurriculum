@@ -1,0 +1,13 @@
+
+<%= render partial: "shared/errors", locals: { obj: band } %>
+
+<form id="new_band" action="<%= url %>" method="post">
+  <%= auth_token %>
+  <input type="hidden" name="_method" value="<%= action %>">
+
+  <label for="band_name">Band name:</label>
+  <input type="band_name" name="band[name]" value="<%= band.name %>">
+
+  <br>
+  <button> <%= word %> band!</button>
+</form>

@@ -1,0 +1,23 @@
+
+<h2>Notes</h2>
+
+<% if track.notes %>
+<ul>
+<% track.notes.each do |note| %>
+  <li>
+    <%= note.content %>
+      <br>
+      - <em><%= note.user_email %></em>
+
+
+    <% if note.user_id == current_user.id %>
+      <%= (render partial: "notes/destroy_note", locals: {note: note}) %>
+    <% end %>
+    <br>
+  </li>
+<% end %>
+</ul>
+
+<% else %>
+  <em>There are no notes for this track. Add one below!</em>
+<% end %>

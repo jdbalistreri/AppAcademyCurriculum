@@ -1,0 +1,41 @@
+<h1>Add a new track to "<%= @album.name %>"!</h1>
+
+<%= render partial: "shared/errors", locals: {obj: @track} %>
+
+<form action="<%= tracks_url %>" method="post">
+  <%= auth_token %>
+
+  <label for="track_name"><strong>Track name:</strong></label>
+  <input id="track_name" type="text" name="track[name]" value="<%= @track.name %>">
+  <br>
+
+  <label for="track_album"><strong>Album:</strong></label>
+  <select id="track_album" name="track[album_id]">
+    <%= listed_options(@albums, @album) %>
+  </select>
+  <br>
+
+  <strong>Track Type:</strong>
+  <br>
+  <label for="Regular">Regular</label>
+  <input  id="Regular"
+          type="radio"
+          name="track[track_type]"
+          value="regular"
+          <%= "checked" if @track.track_type == "regular" %> >
+
+  <label for="bonus">Bonus</label>
+  <input  id="bonus"
+          type="radio"
+          name="track[track_type]"
+          value="bonus"
+          <%= "checked" if @track.track_type == "bonus" %> >
+  <br>
+
+  <label for="track_lyrics"><strong>Lyrics:</strong></label>
+  <br>
+  <textarea  id="track_lyrics"
+          name="track[lyrics]"><%= @track.lyrics %></textarea>
+
+  <button>Submit!</button>
+</form>

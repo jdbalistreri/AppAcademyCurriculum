@@ -1,0 +1,10 @@
+
+<% if objs.empty? %>
+<em><%= "Sorry, no #{name.pluralize.downcase} yet." %></em>
+<% else %>
+<ul>
+  <% sort(objs).each do |obj| %>
+    <li> <a href="<%= self.send("#{name}_url", obj) %>"><%= obj.name %></a></li>
+  <% end %>
+</ul>
+<% end %>

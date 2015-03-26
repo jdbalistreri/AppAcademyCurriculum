@@ -1,0 +1,37 @@
+<form action="<%= url %>" method="post">
+  <%= auth_token %>
+  <input type="hidden" name="_method" value="<%= action %>">
+
+  <label for="album_band"><strong>Band:</strong></label>
+  <select id="album_band" name="album[band_id]">
+    <%= listed_options(bands, band) %>
+  </select>
+  <br>
+
+  <label for="album_name"><strong>Album name:</strong></label>
+  <input id="album_name" type="text" name="album[name]" value="<%= album.name %>" >
+  <br>
+
+  <label for="album_year"><strong>Album year:</strong></label>
+  <input id="album_year" type="text" name="album[recording_year]" value="<%= album.recording_year %>" >
+  <br>
+
+  <strong>Recording Type:</strong>
+  <br>
+  <label for="studio">Studio</label>
+  <input  id="studio"
+          type="radio"
+          name="album[recording_type]"
+          value="studio"
+          <%= "checked" if album.recording_type == "studio" %> >
+
+  <label for="live">Live</label>
+  <input  id="live"
+          type="radio"
+          name="album[recording_type]"
+          value="live"
+          <%= "checked" if album.recording_type == "live" %> >
+
+  <br>
+  <button> <%= word %> album!</button>
+</form>

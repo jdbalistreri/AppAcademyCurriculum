@@ -1,0 +1,22 @@
+<h1> <%= @band.name %> Discography </h1>
+
+<%= render partial: "shared/index", locals: {objs: @albums, name: "album"} %>
+
+<br><br>
+
+<a href="<%= new_band_album_url(@band) %>">Add an album!</a>
+
+<br>
+<a href="<%= edit_band_url %>">Edit band</a>
+<br>
+
+<form action="<%= band_url(@band) %>" method="post">
+  <%= auth_token %>
+  <input type="hidden" name="_method" value="DELETE">
+  <button>Delete band</button>
+</form>
+
+<br>
+<br>
+
+<a href="<%= bands_url %>" >Back to bands</a>

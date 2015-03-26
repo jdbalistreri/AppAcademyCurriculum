@@ -1,0 +1,12 @@
+<h1>Edit "<%= @album_name %>"</h1>
+
+<%= render partial: "shared/errors", locals: { obj: @album } %>
+
+<%= render partial: "album_form", locals: {
+                                    url: album_url(@album),
+                                    action: "PATCH",
+                                    word: "Update",
+                                    album: @album,
+                                    band: @band,
+                                    bands: @bands
+  } %>
