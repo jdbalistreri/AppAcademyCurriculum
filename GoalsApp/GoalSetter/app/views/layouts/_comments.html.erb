@@ -1,0 +1,14 @@
+<h4>Comments</h4>
+<ul>
+  <% commentable.comments.each do |comment| %>
+    <li><%= comment.body %> (<%= comment.author_name %>)</li>
+  <% end %>
+</ul>
+
+<form class="" action="<%= comments_url %>" method="post">
+  <%= auth_token %>
+  <textarea id="Comment" name="comment[body]" rows="8" cols="40"></textarea>
+  <input type="hidden" name="commentable[type]" value="<%= commentable.class %>">
+  <input type="hidden" name="commentable[id]" value="<%=commentable.id%>">
+  <button>New Comment</button>
+</form>

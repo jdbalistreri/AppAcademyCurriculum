@@ -1,0 +1,9 @@
+<h2>All Goals</h2>
+
+<ul>
+  <% @goals.each do |goal| %>
+    <% next if goal.closed? && current_user.id != goal.user_id %>
+    <li><a href="<%= goal_url(goal) %>"><%=goal.title%></a>
+      (<%= goal.user_name %>)</li>
+  <% end %>
+</ul>

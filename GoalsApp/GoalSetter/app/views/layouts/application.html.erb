@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GoalSetter</title>
+
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<% if logged_in? %>
+  <%= current_user.username %>
+  <form class="" action=" <%= session_url %>" method="post">
+    <input type="hidden" name="_method" value="DELETE">
+    <%= auth_token %>
+    <button>Log Out</button>
+  </form>
+<% else %>
+  <a href=" <%= new_user_url %>">Sign Up</a>
+  <a href=" <%= new_session_url %>">Log In</a>
+<% end %>
+
+<% if flash[:errors] %>
+  <ul>
+  <% flash[:errors].each do |error| %>
+    <li><%= error %></li>
+  <% end %>
+  </ul>
+<% end %>
+
+<%= yield %>
+
+<a href=" <%= users_url %>">All Users</a>
+<a href=" <%= goals_url %>">All Goals</a>
+
+
+</body>
+</html>

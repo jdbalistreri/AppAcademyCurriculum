@@ -1,0 +1,20 @@
+<%= @user.username %>
+
+<h3>Goals</h3>
+
+<ul>
+  <% @user.goals.each do |goal| %>
+    <% next if goal.closed? && current_user.id != @user.id %>
+    <li><a href="<%= goal_url(goal) %>"><%=goal.title%></a></li>
+  <% end %>
+</ul>
+
+
+<br>
+
+<% if current_user.id == @user.id %>
+  <a href=" <%= new_goal_url %>">New Goal</a>
+<% end %>
+<br>
+
+<%= render 'layouts/comments', commentable: @user %>
