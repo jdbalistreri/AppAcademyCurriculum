@@ -1,0 +1,30 @@
+<h1> Request a Cat Rental</h1>
+
+<%= @request.errors.full_messages %>
+
+<form action="<%= cat_rental_requests_url %>" method="post">
+
+  <label for="request_cat_name">Pick a cat: </label>
+  <select id="request_cat_name" name="cat_rental_request[cat_id]">
+    <% @cats.each do |cat| %>
+      <option value="<%= cat.id %>" <%= "selected" if @request.cat_id == cat.id %>
+        ><%= cat.name.capitalize %></option>
+    <% end %>
+  </select>
+  <br>
+
+  <label for="request_start_date">Start date:</label>
+  <input  id="request_start_date"
+          type="date"
+          name="cat_rental_request[start_date]"
+          value="<%= @request.start_date %>">
+  <br>
+  <label for="request_end_date">End date:</label>
+  <input  id="request_end_date"
+          type="date"
+          name="cat_rental_request[end_date]"
+          value="<%= @request.end_date %>">
+
+  <input type="submit" value="Request cat">
+
+</form>

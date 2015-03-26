@@ -1,0 +1,81 @@
+<h1> Welcome to <%= @cat.name.capitalize %>'s Page </h1>
+
+<table>
+  <tr>
+    <td>Name:</td>
+    <td><%= @cat.name %></td>
+  </tr>
+
+  <tr>
+    <td> Sex:</td>
+    <td> <%= @cat.sex %> </td>
+  </tr>
+
+  <tr>
+    <td> Color: </td>
+    <td> <%= @cat.color %> </td>
+  </tr>
+
+  <tr>
+    <td> Age: </td>
+    <td> <%= @cat.age %> </td>
+  </tr>
+
+  <tr>
+    <td> Description: </td>
+    <td> <%= @cat.description %> </td>
+  </tr>
+
+
+</table>
+
+<br>
+<a href="<%= edit_cat_url(@cat) %>"> Edit this cat! </a>
+<br>
+<br>
+
+<form action="<%= cat_url(@cat) %>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <button>Delete this cat!</button>
+</form>
+
+
+<br>
+<br>
+<a href="<%= cats_url %>" > Back to index </a>
+
+
+<h2> <%= @cat.name.capitalize %>'s Rental Requests </h2>
+
+<table>
+  <tr>
+    <td> Start Date:</td>
+    <td> End Date:  </td>
+    <td> Status:  </td>
+  </tr>
+
+  <% @cat.cat_rental_requests.order(:start_date).each do |request| %>
+  <tr>
+      <td> <%= request.start_date %> </td>
+      <td> <%= request.end_date %> </td>
+      <td> <%= request.status %> </td>
+      <% if request.pending? %>
+        <td>
+          <form action="<%=cat_rental_requests_approve_url%>" method="post">
+          <input type="hidden" name="cat_rental_request[id]" value="<%=request.id%>" >
+          <input type="hidden" name="cat[id]" value="<%=@cat.id%>" >
+          <button>Approve this request!</button>
+          </form>
+        </td>
+        <td>
+          <form action="<%=cat_rental_requests_deny_url%>" method="post">
+          <input type="hidden" name="cat_rental_request[id]" value="<%=request.id%>" >
+          <input type="hidden" name="cat[id]" value="<%=@cat.id%>" >
+          <button>Deny this request!</button>
+          </form>
+        </td>
+      <% end %>
+  </tr>
+    <% end %>
+
+</table>
