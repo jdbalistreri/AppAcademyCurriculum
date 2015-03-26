@@ -1,0 +1,60 @@
+
+
+/* RESET */
+img, figure, body, ul, li, p, h2, a {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  text-decoration: inherit;
+  color: inherit;
+  background: transparent;
+}
+
+img {
+  width: 100%;
+  background-size = cover;
+}
+
+ul {
+  list-style: none;
+}
+
+.group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+
+/*MAIN SECTION*/
+
+
+.thumbnails {
+  width: 400px;
+  margin: 30px;
+}
+
+.active {
+
+}
+
+.gutter-images {
+
+}
+
+.gutter-images > li > img {
+}
+
+.gutter-images > li {
+  width: 80px;
+  float: left;
+  display: none;
+}
+
+.gutter-images > li.displayed {
+  width: 80px;
+  float: left;
+  display: block;
+}
